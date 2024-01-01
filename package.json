@@ -1,0 +1,20 @@
+{
+    "name": "org.bingyan.motivation",
+    "version": "1.0.0",
+    "displayName": "Motivation",
+    "description": "一套思路清奇的状态机工具！",
+    "unity": "2019.1",
+    "unityRelease": "0b5",
+    "documentationUrl": "https://bingyan.feishu.cn/wiki/AZWnwoHucidMBzkc9licUavVnXf",
+    "keywords": [
+        "2D",
+        "State Machine"
+    ],
+    "author": {
+        "name": "Hamster5295",
+        "email": "hamster5295@163.com"
+    },
+    "dependencies": {
+        "org.bingyan.devkit": "1.1.3"
+    }
+}
