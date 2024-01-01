@@ -120,7 +120,7 @@ namespace Motivation
         public List<KeyCode> RequiredKeys => requiredKeys;
         private List<KeyCode> requiredKeys = new List<KeyCode>();
 
-        private List<ControllerModule> capableModules;
+        private List<ControllerModule> capableModules = new();
 
         protected virtual void Start()
         {
@@ -186,7 +186,7 @@ namespace Motivation
         /// </summary>
         /// <param name="module">要添加的模块</param>
         /// <returns>复制后的模块</returns>
-        public ControllerModule AddModule(ControllerModule module)
+        public ControllerModule AddModule(ControllerModule module, bool update = true)
         {
             var mod = module.Copy() as ControllerModule;
             var t = mod.GetType();
@@ -201,8 +201,8 @@ namespace Motivation
                 modules.Add(t, mod);
                 if (printLog) Debug.Log($"{name}: 安装了 {t} 模块");
             }
-            UpdateCapableModules();
             mod.OnAdd(this);
+            if (update) UpdateCapableModules();
             return mod;
         }
 
@@ -210,13 +210,13 @@ namespace Motivation
         /// 移除指定类型的控制模块
         /// </summary>
         /// <param name="t">类型</param>
-        public void RemoveModule(Type t)
+        public void RemoveModule(Type t, bool update = true)
         {
             if (modules.ContainsKey(t))
             {
                 modules[t].OnRemove();
                 modules.Remove(t);
-                UpdateCapableModules();
+                if (update) UpdateCapableModules();
                 if (printLog) Debug.Log($"{name}: 移除了 {t} 模块");
             }
             else Debug.LogWarning($"{name}: 没有 {t} 模块, 但仍调用代码移除");
@@ -450,7 +450,7 @@ namespace Motivation
             if (preInputModule) inputModule = InitModule(preInputModule);
             physicsModule = InitModule(prePhysicsModule);
             foreach (var item in preModules)
-                AddModule(item);
+                AddModule(item, false);
 
             UpdateCapableModules();
         }
