@@ -31,14 +31,14 @@ namespace Motivation
 
             jumpBuffer = new DelayedTrigger(jumpBufferTime);
             groundBuffer = new DelayedTrigger(coyotoTime);
-            if (Host.MatchState(MotivatorState.Grounded)) groundBuffer.Trigger();
+            if (Host.MatchAny(MotivatorState.Grounded)) groundBuffer.Trigger();
 
             Host.RegisterKeys(jumpKeys.ToArray());
         }
 
         public override void OnStateChange(uint state)
         {
-            if (Host.MatchState(MotivatorState.Grounded))
+            if (Host.MatchAny(MotivatorState.Grounded))
             {
                 jumpCnt = 0;
                 groundBuffer.Trigger();
@@ -49,7 +49,7 @@ namespace Motivation
         {
             jumpBuffer.Tick(time);
 
-            if (!Host.MatchState(MotivatorState.Grounded))
+            if (!Host.MatchAny(MotivatorState.Grounded))
                 groundBuffer.Tick(time);
         }
 

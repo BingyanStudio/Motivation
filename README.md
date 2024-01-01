@@ -6,7 +6,7 @@
   
 ## 导入
 1. 导入 [DevKit](https://github.com/BingyanStudio/BingyanDevKit) 依赖包，导入的方法以及相关文档可以在仓库的 README.md 文档中找到。
-2. 复制该仓库的 git 地址: 
+2. 复制该仓库的 git 地址: https://github.com/BingyanStudio/Motivation.git
 3. 打开 Unity3D 的 PackageManager 窗口
 4. 点击左上角的“+”号，选择 "Add package from git URL"
 5. 将刚刚复制的地址粘贴进去

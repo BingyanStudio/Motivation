@@ -103,12 +103,12 @@ namespace Motivation
         /// <summary>
         /// 角色目前是否在地面上
         /// </summary>
-        public bool Grounded => MatchState(MotivatorState.Grounded);
+        public bool Grounded => MatchAny(MotivatorState.Grounded);
 
         /// <summary>
         /// 角色目前是否在水中
         /// </summary>
-        public bool InWater => MatchState(MotivatorState.Diving);
+        public bool InWater => MatchAny(MotivatorState.Diving);
 
         private Dictionary<Type, ControllerModule> modules = new();
         private InputModule inputModule;
@@ -300,8 +300,8 @@ namespace Motivation
         /// </summary>
         private void NotifyStateChanged()
         {
-            physicsModule.OnStateChange(state);
-            inputModule.OnStateChange(state);
+            if (physicsModule.Active) physicsModule.OnStateChange(state);
+            if (inputModule.Active) inputModule.OnStateChange(state);
             foreach (var item in modules)
                 if (item.Value.Active)
                     item.Value.OnStateChange(state);
@@ -315,7 +315,14 @@ namespace Motivation
         /// </summary>
         /// <param name="state">输入的状态</param>
         /// <returns>是否有交集</returns>
-        public bool MatchState(uint state) => (this.state & state) != 0;
+        public bool MatchAny(uint state) => (this.state & state) != 0;
+
+        /// <summary>
+        /// 判断输入的状态是否和本身的状态是否完全一致
+        /// </summary>
+        /// <param name="state">输入的状态</param>
+        /// <returns>是否有完全一致</returns>
+        public bool MatchAll(uint state) => this.state == state;
 
         /// <summary>
         /// 向所有的控制模块发送【键盘被持续按下】的消息
@@ -429,7 +436,10 @@ namespace Motivation
 
         private void UpdateCapableModules()
         {
-            capableModules = modules.Where(i => i.Value.IsCapable(state)).Select(i => i.Value).ToList();
+            var newCapableModules = modules.Where(i => i.Value.IsCapable(state)).Select(i => i.Value).ToList();
+            foreach (var exited in capableModules.Except(newCapableModules)) exited.OnExit();
+            foreach (var entered in newCapableModules.Except(capableModules)) entered.OnEnter();
+            capableModules = newCapableModules;
         }
 
         // 用于加载所有模块的工具方法

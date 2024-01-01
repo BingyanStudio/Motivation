@@ -165,6 +165,18 @@ namespace Motivation
         }
 
         /// <summary>
+        /// 当这个模块被启用的时候触发的回调<br/>
+        /// 【启用】意味着此时 Motivator 的状态码符合该模块的 mask
+        /// </summary>
+        public virtual void OnEnter() { }
+
+        /// <summary>
+        /// 当这个模块被禁用的时候触发的回调<br/>
+        /// 【禁用】意味着此时 Motivator 的状态码不符合该模块的 mask
+        /// </summary>
+        public virtual void OnExit() { }
+
+        /// <summary>
         /// 接收到 【按键持续按下】 事件时的回调
         /// </summary>
         /// <param name="key">按键</param>
