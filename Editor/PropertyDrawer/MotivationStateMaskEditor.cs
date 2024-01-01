@@ -20,6 +20,7 @@ namespace Motivation.Editor
             Next();
 
             var states = MotivationSetting.instance.States;
+            
             for (int i = 0; i < 32; i++)
             {
                 var item = req.GetArrayElementAtIndex(i);

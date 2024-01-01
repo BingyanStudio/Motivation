@@ -10,8 +10,6 @@ namespace Motivation.Editor
     /// </summary>
     public static class MotivationSettingProvider
     {
-        private static MotivationSetting config;
-
         [SettingsProvider]
         public static SettingsProvider Configue()
             => new("Project/Bingyan/Motivation", SettingsScope.Project)

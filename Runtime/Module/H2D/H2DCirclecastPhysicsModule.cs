@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Motivation
 {
     /// <summary>
-    /// 横版2D模式的物理模块，使用箱型射线检测地面
+    /// 横版2D模式的物理模块，使用圆形射线检测地面
     /// </summary>
-    [CreateAssetMenu(fileName = "H2DBoxcastPhysicsModule", menuName = "Motivation/H2D/Physics - Boxcast", order = 0)]
-    public class H2DBoxcastPhysicsModule : H2DPhysicsModuleBase
+    [CreateAssetMenu(fileName = "H2DCirclecastPhysicsModule", menuName = "Motivation/H2D/Physics - Circlecast", order = 0)]
+    public class H2DCirclecastPhysicsModule : H2DPhysicsModuleBase
     {
         [Header("地面")]
         [SerializeField, Header("地面层级名称")] private string[] groundLayerNames = { "Ground" };
