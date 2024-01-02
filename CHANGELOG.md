@@ -16,3 +16,7 @@
 ### 修复
 * 修复了 `Motivator` 的 `capableModules` 列表为 `null` 的bug
 * 修复了从未打开过设置界面时，状态码编辑界面报错的bug
+
+## [1.0.2] - 2024-1-2
+### 修改
+* 现在 `H2DPhysicsModuleBase` 将不会自动修改 `RigidBody2D` 的模式为 `Dynamic` 了
