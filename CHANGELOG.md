@@ -20,3 +20,4 @@
 ## [1.0.2] - 2024-1-2
 ### 修改
 * 现在 `H2DPhysicsModuleBase` 将不会自动修改 `RigidBody2D` 的模式为 `Dynamic` 了
+* 现在 `Motivator.Velocity` 不再与 `RigidBody2D` 绑定
