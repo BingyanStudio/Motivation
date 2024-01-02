@@ -21,13 +21,6 @@ namespace Motivation
 
         public Vector2 GravityDirection { get => gravityDirection; set => gravityDirection = value.normalized; }
 
-        public override void OnAdd(Motivator m)
-        {
-            base.OnAdd(m);
-            m.Rigid.bodyType = RigidbodyType2D.Dynamic;
-            m.Rigid.gravityScale = 0;
-        }
-
         public override void PhysicsProcess(float time)
         {
             GroundDetection();
