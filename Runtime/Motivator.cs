@@ -73,9 +73,9 @@ namespace Motivation
         public Collider2D Col => col;
 
         /// <summary>
-        /// 这个物体的速度。等效于 motivator.Rigid.velocity
+        /// 这个物体的速度
         /// </summary>
-        public Vector2 Velocity { get => Rigid.velocity; set => Rigid.velocity = value; }
+        public Vector2 Velocity { get; set; }
 
         /// <summary>
         /// 这个物体速度在本地坐标系的纵向分量
@@ -177,6 +177,8 @@ namespace Motivation
             {
                 if (i.Active) i.PhysicsProcess(delta);
             });
+
+            Rigid.MovePosition(Rigid.position + Velocity * delta);
         }
 
         /// <summary>
