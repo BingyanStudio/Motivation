@@ -22,7 +22,7 @@ namespace Motivation
         public int MaxJumpCount { get => maxJumpCnt; set => maxJumpCnt = value; }
         protected int jumpCnt = 0;
 
-        protected virtual uint GroundStateMask { get; }
+        protected virtual uint GroundStateMask { get; } = MotivatorState.Grounded;
 
         protected DelayedTrigger jumpBuffer, groundBuffer;
 
