@@ -10,11 +10,13 @@ namespace Motivation
     [CreateAssetMenu(fileName = "H2DMoveModule", menuName = "Motivation/H2D/Move", order = 1)]
     public class H2DMoveModule : ControllerModule
     {
-        [Header("配置")]
-        [SerializeField, Title("速度")] protected float speed = 1;
-
+        [Header("键位")]
         [SerializeField, Header("向左移动")] protected List<KeyCode> leftKeys = new List<KeyCode> { KeyCode.A };
         [SerializeField, Header("向右移动")] protected List<KeyCode> rightKeys = new List<KeyCode> { KeyCode.D };
+
+
+        [Header("配置")]
+        [SerializeField, Title("速度")] protected float speed = 1;
 
         protected bool leftBuffer = false, rightBuffer = false;
 
