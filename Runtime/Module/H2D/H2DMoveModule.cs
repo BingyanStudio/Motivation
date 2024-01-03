@@ -11,12 +11,12 @@ namespace Motivation
     public class H2DMoveModule : ControllerModule
     {
         [Header("配置")]
-        [SerializeField, Title("速度")] private float speed = 1;
+        [SerializeField, Title("速度")] protected float speed = 1;
 
-        [SerializeField, Header("向左移动")] private List<KeyCode> leftKeys = new List<KeyCode> { KeyCode.A };
-        [SerializeField, Header("向右移动")] private List<KeyCode> rightKeys = new List<KeyCode> { KeyCode.D };
+        [SerializeField, Header("向左移动")] protected List<KeyCode> leftKeys = new List<KeyCode> { KeyCode.A };
+        [SerializeField, Header("向右移动")] protected List<KeyCode> rightKeys = new List<KeyCode> { KeyCode.D };
 
-        private bool leftBuffer = false, rightBuffer = false;
+        protected bool leftBuffer = false, rightBuffer = false;
 
         public override void OnAdd(Motivator m)
         {
