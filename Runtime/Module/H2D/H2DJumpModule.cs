@@ -22,6 +22,8 @@ namespace Motivation
         public int MaxJumpCount { get => maxJumpCnt; set => maxJumpCnt = value; }
         protected int jumpCnt = 0;
 
+        protected virtual uint GroundStateMask { get; }
+
         protected DelayedTrigger jumpBuffer, groundBuffer;
 
         public override void OnAdd(Motivator m)
@@ -31,14 +33,14 @@ namespace Motivation
 
             jumpBuffer = new DelayedTrigger(jumpBufferTime);
             groundBuffer = new DelayedTrigger(coyotoTime);
-            if (Host.MatchAny(MotivatorState.Grounded)) groundBuffer.Trigger();
+            if (Host.MatchAny(GroundStateMask)) groundBuffer.Trigger();
 
             Host.RegisterKeys(jumpKeys.ToArray());
         }
 
         public override void OnStateChange(uint state)
         {
-            if (Host.MatchAny(MotivatorState.Grounded))
+            if (Host.MatchAny(GroundStateMask))
             {
                 jumpCnt = 0;
                 groundBuffer.Trigger();
@@ -49,7 +51,7 @@ namespace Motivation
         {
             jumpBuffer.Tick(time);
 
-            if (!Host.MatchAny(MotivatorState.Grounded))
+            if (!Host.MatchAny(GroundStateMask))
                 groundBuffer.Tick(time);
         }
 
