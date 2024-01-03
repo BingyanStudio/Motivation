@@ -461,7 +461,7 @@ namespace Motivation
     /// <summary>
     /// 内置的状态码常量，防止硬编码
     /// </summary>
-    public static partial class MotivatorState
+    public static class MotivatorState
     {
         public const uint Grounded = 1;
         public const uint Diving = 0b10;

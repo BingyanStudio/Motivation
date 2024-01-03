@@ -10,13 +10,13 @@ namespace Motivation
     public class H2DCirclecastPhysicsModule : H2DPhysicsModuleBase
     {
         [Header("地面")]
-        [SerializeField, Header("地面层级名称")] private string[] groundLayerNames = { "Ground" };
-        [SerializeField, Title("额外检测距离")] private float groundDetDistance = 0.1f;
-        [SerializeField, Title("地面检测半宽")] private float groundDetRadius = 0.5f;
-        [SerializeField, Title("中心-脚底距离")] private float charactorExtent = 0.5f;
-        [SerializeField, Title("最大斜坡角度")] private float maxSlopeDegree = 45;
+        [SerializeField, Header("地面层级名称")] protected string[] groundLayerNames = { "Ground" };
+        [SerializeField, Title("额外检测距离")] protected float groundDetDistance = 0.1f;
+        [SerializeField, Title("地面检测半宽")] protected float groundDetRadius = 0.5f;
+        [SerializeField, Title("中心-脚底距离")] protected float charactorExtent = 0.5f;
+        [SerializeField, Title("最大斜坡角度")] protected float maxSlopeDegree = 45;
 
-        private int groundLayerMask = 0;
+        protected int groundLayerMask = 0;
 
         public override void OnAdd(Motivator m)
         {

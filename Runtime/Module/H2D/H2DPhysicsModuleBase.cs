@@ -9,15 +9,15 @@ namespace Motivation
     public abstract class H2DPhysicsModuleBase : PhysicsModule
     {
         [Header("重力")]
-        [SerializeField, Title("重力加速度")] private float gravity = 10;
-        [SerializeField, Title("重力方向")] private Vector2 gravityDirection = Vector2.down;
+        [SerializeField, Title("重力加速度")] protected float gravity = 10;
+        [SerializeField, Title("重力方向")] protected Vector2 gravityDirection = Vector2.down;
 
         [Header("阻力")]
-        [SerializeField, Title("地面阻尼")] private float groundDamp = 0.1f;
-        [SerializeField, Title("空中横向阻尼")] private float airHDamp = 0.1f;
-        [SerializeField, Title("空中纵向阻尼")] private float airVDamp = 0.1f;
-        [SerializeField, Title("水中横向阻尼")] private float waterHDamp = 0.1f;
-        [SerializeField, Title("水中纵向阻尼")] private float waterVDamp = 0.1f;
+        [SerializeField, Title("地面阻尼")] protected float groundDamp = 0.1f;
+        [SerializeField, Title("空中横向阻尼")] protected float airHDamp = 0.1f;
+        [SerializeField, Title("空中纵向阻尼")] protected float airVDamp = 0.1f;
+        [SerializeField, Title("水中横向阻尼")] protected float waterHDamp = 0.1f;
+        [SerializeField, Title("水中纵向阻尼")] protected float waterVDamp = 0.1f;
 
         public Vector2 GravityDirection { get => gravityDirection; set => gravityDirection = value.normalized; }
 
@@ -28,7 +28,7 @@ namespace Motivation
             ApplyDamping(time);
         }
 
-        private void GroundDetection()
+        protected void GroundDetection()
         {
             if (IsGrounded())
             {
@@ -37,7 +37,7 @@ namespace Motivation
             else if (Host.Grounded) Host.RemoveState(MotivatorState.Grounded);
         }
 
-        private void ApplyGravity(float time)
+        protected void ApplyGravity(float time)
         {
             if (Host.Grounded)
             {
@@ -52,7 +52,7 @@ namespace Motivation
             }
         }
 
-        private void ApplyDamping(float time)
+        protected void ApplyDamping(float time)
         {
             float hd, vd;
 

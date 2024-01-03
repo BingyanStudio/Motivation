@@ -21,3 +21,10 @@
 ### 修改
 * 现在 `H2DPhysicsModuleBase` 将不会自动修改 `RigidBody2D` 的模式为 `Dynamic` 了
 * 现在 `Motivator.Velocity` 不再与 `RigidBody2D` 绑定
+
+## [1.0.3] - 2024-1-3
+### 修改
+* 将“参数”小标题移动至“键位”下方, 使继承 `H2DMoveModule` 或 `H2DJumpModule` 时添加的参数可以放在正确的位置  
+* 将 H2D 系列模块的 `private` 成员改为 `protected`
+* 取消了 `MotivatorState` 的 `partial` 修饰
+* 允许 `H2DJumpModule` 的子类重写对【地面】的判定，以实现在其他情况下重置跳跃次数
