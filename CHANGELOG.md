@@ -28,3 +28,10 @@
 * 将 H2D 系列模块的 `private` 成员改为 `protected`
 * 取消了 `MotivatorState` 的 `partial` 修饰
 * 允许 `H2DJumpModule` 的子类重写对【地面】的判定，以实现在其他情况下重置跳跃次数
+
+## [1.0.4] - 2024-1-8
+### 修改
+* 增加模块的泛型获取方法
+* 增加模块的泛型移除方法
+* `Motivator` 现在不再强行要求物理模块被设置
+* 将 `Motivator` 的大部分 `private` 成员改为 `protected`
