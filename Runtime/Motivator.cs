@@ -227,10 +227,8 @@ namespace Motivation
         /// 移除指定类型的控制模块
         /// </summary>
         /// <typeparam name="T">类型</typeparam>
-        public void RemoveModule<T>() where T : Module
-        {
-            RemoveModule(typeof(T), true);
-        }
+        public void RemoveModule<T>() where T : Module => RemoveModule(typeof(T), true);
+
 
         /// <summary>
         /// 获取指定类型的模块
