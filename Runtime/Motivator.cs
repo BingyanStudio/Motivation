@@ -128,13 +128,6 @@ namespace Motivation
             rb = GetComponent<Rigidbody2D>();
             col = GetComponent<Collider2D>();
 
-            // 初始化模块
-            if (!prePhysicsModule)
-            {
-                Debug.LogError($"{name} 缺少 PhysicsModule, 无法运行!");
-                enabled = false;
-                return;
-            }
             LoadAllModules();
         }
 
