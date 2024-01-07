@@ -251,6 +251,13 @@ namespace Motivation
         public Module GetModule(Module template) => GetModule(template.GetType());
 
         /// <summary>
+        /// 获取指定类型的模块
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        public T GetModule<T>() where T : Module
+            => GetModule(typeof(T)) as T;
+
+        /// <summary>
         /// 激活所有的模块
         /// </summary>
         public void ActiveAllModules()
