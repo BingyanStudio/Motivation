@@ -14,7 +14,7 @@ namespace Motivation
     public class Motivator : ProcessableMono
     {
         [Header("基础")]
-        [SerializeField, Title("自主运行")] private bool automatic = true;
+        [SerializeField, Title("自主运行")] protected bool automatic = true;
         [SerializeField, Title("输入模块")] private InputModule preInputModule;
         [SerializeField, Title("物理模块")] private PhysicsModule prePhysicsModule;
         [SerializeField, Title("时间尺度")] private float timeScale = 1;
@@ -97,8 +97,8 @@ namespace Motivation
         /// </summary>
         public Vector2 RightDir => transform.TransformDirection(Vector3.right);
 
-        private Rigidbody2D rb;
-        private Collider2D col;
+        protected Rigidbody2D rb;
+        protected Collider2D col;
 
         /// <summary>
         /// 角色目前是否在地面上
@@ -110,9 +110,9 @@ namespace Motivation
         /// </summary>
         public bool InWater => MatchAny(MotivatorState.Diving);
 
-        private Dictionary<Type, ControllerModule> modules = new();
-        private InputModule inputModule;
-        private PhysicsModule physicsModule;
+        protected Dictionary<Type, ControllerModule> modules = new();
+        protected InputModule inputModule;
+        protected PhysicsModule physicsModule;
 
         /// <summary>
         /// 这个 Motivator 运行所需要的所有键盘按键，由各个控制模块注册
@@ -120,7 +120,7 @@ namespace Motivation
         public List<KeyCode> RequiredKeys => requiredKeys;
         private List<KeyCode> requiredKeys = new List<KeyCode>();
 
-        private List<ControllerModule> capableModules = new();
+        protected List<ControllerModule> capableModules = new();
 
         protected virtual void Start()
         {
