@@ -231,6 +231,15 @@ namespace Motivation
         public void RemoveModule(ControllerModule module) => RemoveModule(module.GetType());
 
         /// <summary>
+        /// 移除指定类型的控制模块
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        public void RemoveModule<T>() where T : Module
+        {
+            RemoveModule(typeof(T), true);
+        }
+
+        /// <summary>
         /// 获取指定类型的模块
         /// </summary>
         /// <param name="t">指定的类型</param>
