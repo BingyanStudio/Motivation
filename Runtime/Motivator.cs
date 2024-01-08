@@ -454,12 +454,8 @@ namespace Motivation
         private void UpdateCapableModules()
         {
             var newCapableModules = modules.Where(i => i.Value.IsCapable(state)).Select(i => i.Value).ToList();
-            foreach (var exited in capableModules.Except(newCapableModules))
-                if (exited.Active)
-                    exited.OnExit();
-            foreach (var entered in newCapableModules.Except(capableModules))
-                if (entered.Active)
-                    entered.OnEnter();
+            foreach (var exited in capableModules.Except(newCapableModules).Where(i => i.Active)) exited.OnExit();
+            foreach (var entered in newCapableModules.Except(capableModules).Where(i => i.Active)) entered.OnEnter();
             capableModules = newCapableModules;
         }
 
