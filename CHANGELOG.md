@@ -47,6 +47,7 @@
 ## [1.0.6] - 2024-1-8
 ### 新增
 * 增加了 `Motivator` 在编辑器面板的状态显示
+* 将层级选择器改用为原生的 `LayerMask`
 
 ### 修复
 * 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内修改 `Motivator` 的状态码导致堆栈溢出的bug
