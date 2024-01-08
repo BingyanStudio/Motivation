@@ -285,9 +285,14 @@ namespace Motivation
         /// <param name="state">要改变的状态位</param>
         public void AddState(uint state)
         {
+            uint originalState = this.state;
+
             // 按位或, 让state中特定几项变为1
             this.state |= state;
-            NotifyStateChanged();
+
+            // 发生改变，则提醒
+            if (originalState != this.state)
+                NotifyStateChanged();
         }
 
         /// <summary>
@@ -297,9 +302,13 @@ namespace Motivation
         /// <param name="state">要改变的状态位</param>
         public void RemoveState(uint state)
         {
+            uint originalState = this.state;
+
             // 先取反再按位与, 让state中的特定几项变为0
             this.state &= ~state;
-            NotifyStateChanged();
+
+            if (originalState != this.state)
+                NotifyStateChanged();
         }
 
         /// <summary>
@@ -423,6 +432,17 @@ namespace Motivation
         }
 
         /// <summary>
+        /// 向当前所有激活的模块广播一条消息
+        /// </summary>
+        /// <param name="what">消息内容</param>
+        public void Message(uint what)
+        {
+            if (physicsModule.Active) physicsModule.OnMessage(what);
+            if (inputModule.Active) physicsModule.OnMessage(what);
+            foreach (var module in capableModules.Where(i => i.Active)) module.OnMessage(what);
+        }
+
+        /// <summary>
         /// 打印所有模块的状态信息，用于排除bug
         /// </summary>
         public void PrintModuleState()
@@ -445,8 +465,8 @@ namespace Motivation
         private void UpdateCapableModules()
         {
             var newCapableModules = modules.Where(i => i.Value.IsCapable(state)).Select(i => i.Value).ToList();
-            foreach (var exited in capableModules.Except(newCapableModules)) exited.OnExit();
-            foreach (var entered in newCapableModules.Except(capableModules)) entered.OnEnter();
+            foreach (var exited in capableModules.Except(newCapableModules).Where(i => i.Active)) exited.OnExit();
+            foreach (var entered in newCapableModules.Except(capableModules).Where(i => i.Active)) entered.OnEnter();
             capableModules = newCapableModules;
         }
 

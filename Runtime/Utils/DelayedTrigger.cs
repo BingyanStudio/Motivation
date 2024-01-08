@@ -9,6 +9,17 @@ namespace Motivation
     public class DelayedTrigger
     {
         private float value;
+
+        /// <summary>
+        /// 当前 DelayedTrigger 的状态时间，为从 0 到 bufferedTime 的正向计时
+        /// </summary>
+        public float Time => value - timer;
+
+        /// <summary>
+        /// 当前 DelayedTrigger 的状态百分比，为从 0 到 100% 的正向计时
+        /// </summary>
+        public float Percent => Time / value;
+
         private float timer = 0;
 
         /// <summary>

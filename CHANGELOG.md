@@ -35,3 +35,11 @@
 * 增加模块的泛型移除方法
 * `Motivator` 现在不再强行要求物理模块被设置
 * 将 `Motivator` 的大部分 `private` 成员改为 `protected`
+
+## [1.0.5] - 2024-1-8
+### 新增
+* 增加了 `Motivator.Message(uint)` 与 `Module.OnMessage(uint)` 方法，作为跨模块信息传递的渠道之一 
+
+### 修改
+* 提供 `DelayedTrigger.Time` 和 `DelayedTrigger.Percent` 用于获取其内部计时状态
+* 现在 `Motivator` 在更新激活的模块时，将不会调用未启用模块的 `OnEnter()` 和 `OnExit()` 方法

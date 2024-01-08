@@ -58,6 +58,15 @@ namespace Motivation
         public virtual void OnStateChange(uint state) { }
 
         /// <summary>
+        /// 当有消息广播被接收时触发<br/>
+        /// </summary>
+        /// <param name="what">消息内容</param>
+        public virtual void OnMessage(uint what)
+        {
+
+        }
+
+        /// <summary>
         /// 复制这个模组
         /// </summary>
         /// <returns>复制的模块</returns>
