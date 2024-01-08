@@ -197,7 +197,13 @@ namespace Motivation
                 if (printLog) Debug.Log($"{name}: 安装了 {t} 模块");
             }
             mod.OnAdd(this);
-            if (update) UpdateCapableModules();
+
+            if (update)
+            {
+                if (!updateCapableModulesLock) UpdateCapableModules();
+                else requireReupdateCapableModules = true;
+            }
+
             return mod;
         }
 
@@ -211,7 +217,11 @@ namespace Motivation
             {
                 modules[t].OnRemove();
                 modules.Remove(t);
-                if (update) UpdateCapableModules();
+                if (update)
+                {
+                    if (!updateCapableModulesLock) UpdateCapableModules();
+                    else requireReupdateCapableModules = true;
+                }
                 if (printLog) Debug.Log($"{name}: 移除了 {t} 模块");
             }
             else Debug.LogWarning($"{name}: 没有 {t} 模块, 但仍调用代码移除");
@@ -462,12 +472,24 @@ namespace Motivation
             return cpy as T;
         }
 
+        private bool updateCapableModulesLock = false, requireReupdateCapableModules = false;
+        // 更新可用模块列表
         private void UpdateCapableModules()
         {
+            if (updateCapableModulesLock) return;
+            updateCapableModulesLock = true;
+
             var newCapableModules = modules.Where(i => i.Value.IsCapable(state)).Select(i => i.Value).ToList();
             foreach (var exited in capableModules.Except(newCapableModules).Where(i => i.Active)) exited.OnExit();
             foreach (var entered in newCapableModules.Except(capableModules).Where(i => i.Active)) entered.OnEnter();
             capableModules = newCapableModules;
+
+            updateCapableModulesLock = false;
+            if (requireReupdateCapableModules)
+            {
+                requireReupdateCapableModules = false;
+                UpdateCapableModules();
+            }
         }
 
         // 用于加载所有模块的工具方法

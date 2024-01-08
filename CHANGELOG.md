@@ -43,3 +43,10 @@
 ### 修改
 * 提供 `DelayedTrigger.Time` 和 `DelayedTrigger.Percent` 用于获取其内部计时状态
 * 现在 `Motivator` 在更新激活的模块时，将不会调用未启用模块的 `OnEnter()` 和 `OnExit()` 方法
+
+## [1.0.6] - 2024-1-8
+### 新增
+* 增加了 `Motivator` 在编辑器面板的状态显示
+
+### 修复
+* 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内修改 `Motivator` 的状态码导致堆栈溢出的bug
