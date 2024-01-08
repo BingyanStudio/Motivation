@@ -10,19 +10,11 @@ namespace Motivation
     public class H2DCirclecastPhysicsModule : H2DPhysicsModuleBase
     {
         [Header("地面")]
-        [SerializeField, Header("地面层级名称")] protected string[] groundLayerNames = { "Ground" };
+        [SerializeField, Header("地面层级")] protected LayerMask groundLayers;
         [SerializeField, Title("额外检测距离")] protected float groundDetDistance = 0.1f;
         [SerializeField, Title("地面检测半宽")] protected float groundDetRadius = 0.5f;
         [SerializeField, Title("中心-脚底距离")] protected float charactorExtent = 0.5f;
         [SerializeField, Title("最大斜坡角度")] protected float maxSlopeDegree = 45;
-
-        protected int groundLayerMask = 0;
-
-        public override void OnAdd(Motivator m)
-        {
-            base.OnAdd(m);
-            groundLayerMask = LayerMask.GetMask(groundLayerNames);
-        }
 
         public override void OnGizmos(Motivator m)
         {
@@ -36,7 +28,7 @@ namespace Motivation
             var dir = -Host.UpDir;
 
             // 碰撞箱底部中心的坐标
-            var result = Physics2D.CircleCast(bounds.center, groundDetRadius, dir, charactorExtent - groundDetRadius + groundDetDistance, groundLayerMask);
+            var result = Physics2D.CircleCast(bounds.center, groundDetRadius, dir, charactorExtent - groundDetRadius + groundDetDistance, groundLayers);
             return result.collider
                 && Vector2.Angle(Host.transform.TransformDirection(Vector3.up), result.normal) <= maxSlopeDegree;
         }
