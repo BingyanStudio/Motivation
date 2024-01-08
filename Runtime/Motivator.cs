@@ -334,7 +334,9 @@ namespace Motivation
                     item.Value.OnStateChange(state);
 
             // 更新在当前state下可以执行的模块
-            UpdateCapableModules();
+            if (!updateCapableModulesLock)
+                UpdateCapableModules();
+            else requireReupdateCapableModules = true;
         }
 
         /// <summary>
