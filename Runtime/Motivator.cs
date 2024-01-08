@@ -432,6 +432,17 @@ namespace Motivation
         }
 
         /// <summary>
+        /// 向当前所有激活的模块广播一条消息
+        /// </summary>
+        /// <param name="what">消息内容</param>
+        public void Message(uint what)
+        {
+            if (physicsModule.Active) physicsModule.OnMessage(what);
+            if (inputModule.Active) physicsModule.OnMessage(what);
+            foreach (var module in capableModules.Where(i => i.Active)) module.OnMessage(what);
+        }
+
+        /// <summary>
         /// 打印所有模块的状态信息，用于排除bug
         /// </summary>
         public void PrintModuleState()
