@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using Bingyan;
 using UnityEngine;
@@ -23,9 +24,11 @@ namespace Motivation
         public override void OnAdd(Motivator m)
         {
             base.OnAdd(m);
-            Host.RegisterKeys(leftKeys.ToArray());
-            Host.RegisterKeys(rightKeys.ToArray());
+            // Host.RegisterKeys(leftKeys.ToArray());
+            // Host.RegisterKeys(rightKeys.ToArray());
         }
+
+        public override KeyCode[] GetRequiredKeys() => leftKeys.Union(rightKeys).ToArray();
 
         public override void PhysicsProcess(float time)
         {

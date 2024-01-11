@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Motivation
@@ -61,10 +62,7 @@ namespace Motivation
         /// 当有消息广播被接收时触发<br/>
         /// </summary>
         /// <param name="what">消息内容</param>
-        public virtual void OnMessage(uint what)
-        {
-
-        }
+        public virtual void OnMessage(uint what) { }
 
         /// <summary>
         /// 复制这个模组
@@ -95,6 +93,33 @@ namespace Motivation
     /// </summary>
     public abstract class InputModule : Module
     {
+        /// <summary>
+        /// 当前 <see cref="Motivator"/> 需要监听的按键列表
+        /// </summary>
+        protected HashSet<KeyCode> RequiredKeys { get; private set; } = new();
+
+        /// <summary>
+        /// 当 <see cref="Motivator"/> 因安装新模块而增加了需求按键时触发<br/>
+        /// 在此更新【需要监听的按键】列表
+        /// </summary>
+        /// <param name="addedKeys">增加的按键</param>
+        public void OnKeyAdded(params KeyCode[] addedKeys)
+        {
+            foreach (var item in addedKeys)
+                RequiredKeys.Add(item);
+        }
+
+        /// <summary>
+        /// 当 <see cref="Motivator"/> 因移除模块而减少了需求按键时触发<br/>
+        /// 在此更新【需要监听的按键】列表
+        /// </summary>
+        /// <param name="removedKeys">移除的按键</param>
+        public void OnKeyRemoved(params KeyCode[] removedKeys)
+        {
+            foreach (var item in removedKeys)
+                RequiredKeys.Remove(item);
+        }
+
         /// <summary>
         /// 向 <see cref="Motivator"/> 发送【键盘持续按下】事件
         /// </summary>
@@ -172,6 +197,13 @@ namespace Motivation
             var maskedState = state & masks.Item1;
             return (maskedState & masks.Item2) == masks.Item2 && (~maskedState & masks.Item3) == masks.Item3;
         }
+
+        /// <summary>
+        /// 重写这个方法，并返回当前控制模块所需要绑定的按键列表。
+        /// 在此返回的数组会传递给 InputModule，并要求其监听对应的按键输入。
+        /// </summary>
+        /// <returns>当前控制模块所需要绑定的按键列表</returns>
+        public virtual KeyCode[] GetRequiredKeys() => new KeyCode[0];
 
         /// <summary>
         /// 当这个模块被启用的时候触发的回调<br/>

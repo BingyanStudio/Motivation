@@ -16,12 +16,12 @@ namespace Motivation
         {
             if (enableKey)
             {
-                Host.RequiredKeys.ForEach(i =>
+                foreach (var i in RequiredKeys)
                 {
                     if (Input.GetKeyDown(i)) OnKeyDown(i);
                     if (Input.GetKey(i)) OnKey(i);
                     if (Input.GetKeyUp(i)) OnKeyUp(i);
-                });
+                }
             }
 
             if (enableMouse)
