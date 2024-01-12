@@ -99,6 +99,16 @@ namespace Motivation
         protected HashSet<KeyCode> RequiredKeys { get; private set; } = new();
 
         /// <summary>
+        /// 按键注册初始化。<br/>
+        /// 应当由 <see cref="Motivator"/> 在当前输入模块刚添加时调用，以注册先前添加的按键们。
+        /// </summary>
+        /// <param name="keys">按键们</param>
+        public void InitKeys(IEnumerable<KeyCode> keys)
+        {
+            RequiredKeys = new(keys);
+        }
+
+        /// <summary>
         /// 当 <see cref="Motivator"/> 因安装新模块而增加了需求按键时触发<br/>
         /// 在此更新【需要监听的按键】列表
         /// </summary>
