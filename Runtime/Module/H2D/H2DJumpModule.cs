@@ -34,9 +34,9 @@ namespace Motivation
             jumpBuffer = new DelayedTrigger(jumpBufferTime);
             groundBuffer = new DelayedTrigger(coyotoTime);
             if (Host.MatchAny(GroundStateMask)) groundBuffer.Trigger();
-
-            Host.RegisterKeys(jumpKeys.ToArray());
         }
+
+        public override KeyCode[] GetRequiredKeys() => jumpKeys.ToArray();
 
         public override void OnStateChange(uint state)
         {

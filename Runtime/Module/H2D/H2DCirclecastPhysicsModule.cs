@@ -10,7 +10,7 @@ namespace Motivation
     public class H2DCirclecastPhysicsModule : H2DPhysicsModuleBase
     {
         [Header("地面")]
-        [SerializeField, Header("地面层级")] protected LayerMask groundLayers;
+        [SerializeField, Title("地面层级")] protected LayerMask groundLayers;
         [SerializeField, Title("额外检测距离")] protected float groundDetDistance = 0.1f;
         [SerializeField, Title("地面检测半宽")] protected float groundDetRadius = 0.5f;
         [SerializeField, Title("中心-脚底距离")] protected float charactorExtent = 0.5f;

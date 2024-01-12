@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using Bingyan;
 using UnityEngine;
@@ -20,12 +21,7 @@ namespace Motivation
 
         protected bool leftBuffer = false, rightBuffer = false;
 
-        public override void OnAdd(Motivator m)
-        {
-            base.OnAdd(m);
-            Host.RegisterKeys(leftKeys.ToArray());
-            Host.RegisterKeys(rightKeys.ToArray());
-        }
+        public override KeyCode[] GetRequiredKeys() => leftKeys.Union(rightKeys).ToArray();
 
         public override void PhysicsProcess(float time)
         {
@@ -46,16 +42,6 @@ namespace Motivation
         {
             leftBuffer |= leftKeys.Contains(key);
             rightBuffer |= rightKeys.Contains(key);
-        }
-
-        public void InputLeft()
-        {
-            leftBuffer = true;
-        }
-
-        public void InputRight()
-        {
-            leftBuffer = true;
         }
     }
 }

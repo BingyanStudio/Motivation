@@ -117,8 +117,9 @@ namespace Motivation
         /// <summary>
         /// 这个 Motivator 运行所需要的所有键盘按键，由各个控制模块注册
         /// </summary>
-        public List<KeyCode> RequiredKeys => requiredKeys;
-        private List<KeyCode> requiredKeys = new List<KeyCode>();
+        [Obsolete("这一获取所需输入按键的方法已经过时了，使用 InputModule.RequiredKeys")]
+        public List<KeyCode> RequiredKeys => requiredKeys.Keys.ToList();
+        private Dictionary<KeyCode, int> requiredKeys = new();
 
         protected List<ControllerModule> capableModules = new();
 
@@ -187,6 +188,7 @@ namespace Motivation
             var t = mod.GetType();
             if (modules.ContainsKey(t))
             {
+                RemoveKeys(modules[t]);
                 modules[t].OnRemove();
                 modules[t] = mod;
                 if (printLog) Debug.Log($"{name}: 更新了 {t} 模块");
@@ -196,6 +198,7 @@ namespace Motivation
                 modules.Add(t, mod);
                 if (printLog) Debug.Log($"{name}: 安装了 {t} 模块");
             }
+            AddKeys(mod);
             mod.OnAdd(this);
 
             if (update)
@@ -215,6 +218,7 @@ namespace Motivation
         {
             if (modules.ContainsKey(t))
             {
+                RemoveKeys(modules[t]);
                 modules[t].OnRemove();
                 modules.Remove(t);
                 if (update)
@@ -430,11 +434,12 @@ namespace Motivation
         /// 参考这个用旧输入系统写的输入模块: <see cref="SimpleInputModule"/>
         /// </summary>
         /// <param name="codes">所有需要注册的按键代码</param>
+        [Obsolete("这一输出注册方法将不会再使用。考虑重写 ControllerModule.GetRequiredKeys()")]
         public void RegisterKeys(params KeyCode[] codes)
         {
             foreach (var code in codes)
             {
-                if (!requiredKeys.Contains(code)) requiredKeys.Add(code);
+                if (!requiredKeys.ContainsKey(code)) requiredKeys.Add(code, 1);
                 else
                 {
                     // TODO: 需要判断冲突
@@ -444,7 +449,8 @@ namespace Motivation
         }
 
         /// <summary>
-        /// 向当前所有激活的模块广播一条消息
+        /// 向当前所有激活的模块广播一条消息<br/>
+        /// 这条信息只能是一个简单的数字。建议使用常量。
         /// </summary>
         /// <param name="what">消息内容</param>
         public void Message(uint what)
@@ -499,12 +505,50 @@ namespace Motivation
         {
             requiredKeys = new();
 
-            if (preInputModule) inputModule = InitModule(preInputModule);
-            physicsModule = InitModule(prePhysicsModule);
+            if (preInputModule)
+            {
+                inputModule = InitModule(preInputModule);
+                inputModule.InitKeys(requiredKeys.Keys);
+            }
+            if (prePhysicsModule) physicsModule = InitModule(prePhysicsModule);
             foreach (var item in preModules)
                 AddModule(item, false);
 
             UpdateCapableModules();
+        }
+
+        // 将指定模块中需求的按键添加到字典
+        private void AddKeys(ControllerModule module)
+        {
+            var codes = module.GetRequiredKeys();
+            foreach (var code in codes)
+            {
+                if (!requiredKeys.ContainsKey(code))
+                {
+                    requiredKeys.Add(code, 1);
+                    inputModule?.OnKeyAdd(code);
+                }
+                else requiredKeys[code]++;
+            }
+        }
+
+        // 将指定模块中需求的按键从字典减少，归零则移除
+        private void RemoveKeys(ControllerModule module)
+        {
+            var codes = module.GetRequiredKeys();
+            foreach (var code in codes)
+            {
+                if (requiredKeys.ContainsKey(code))
+                {
+                    requiredKeys[code]--;
+                    if (requiredKeys[code] <= 0)
+                    {
+                        requiredKeys.Remove(code);
+                        inputModule?.OnKeyRemove(code);
+                    }
+                }
+                else Debug.LogWarning($"尝试移除未被添加的按键: {code}");
+            }
         }
     }
 
