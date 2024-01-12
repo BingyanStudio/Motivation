@@ -11,7 +11,7 @@
   
 
 ## [1.0.1] - 2024-1-1
-### 修改
+### 更改
 * 将 `H2DBoxcastPhysicsModule` 更名为 `H2DCirclecastPhysicsModule` 以与实际行为匹配
 
 ### 修复
@@ -20,13 +20,13 @@
   
 
 ## [1.0.2] - 2024-1-2
-### 修改
-* 现在 `H2DPhysicsModuleBase` 将不会自动修改 `RigidBody2D` 的模式为 `Dynamic` 了
+### 更改
+* 现在 `H2DPhysicsModuleBase` 将不会自动更改 `RigidBody2D` 的模式为 `Dynamic` 了
 * 现在 `Motivator.Velocity` 不再与 `RigidBody2D` 绑定
   
 
 ## [1.0.3] - 2024-1-3
-### 修改
+### 更改
 * 将“参数”小标题移动至“键位”下方, 使继承 `H2DMoveModule` 或 `H2DJumpModule` 时添加的参数可以放在正确的位置  
 * 将 H2D 系列模块的 `private` 成员改为 `protected`
 * 取消了 `MotivatorState` 的 `partial` 修饰
@@ -34,7 +34,7 @@
   
 
 ## [1.0.4] - 2024-1-8
-### 修改
+### 更改
 * 增加模块的泛型获取方法
 * 增加模块的泛型移除方法
 * `Motivator` 现在不再强行要求物理模块被设置
@@ -45,7 +45,7 @@
 ### 新增
 * 增加了 `Motivator.Message(uint)` 与 `Module.OnMessage(uint)` 方法，作为跨模块信息传递的渠道之一 
   
-### 修改
+### 更改
 * 提供 `DelayedTrigger.Time` 和 `DelayedTrigger.Percent` 用于获取其内部计时状态
 * 现在 `Motivator` 在更新激活的模块时，将不会调用未启用模块的 `OnEnter()` 和 `OnExit()` 方法
   
@@ -56,7 +56,7 @@
 * 将层级选择器改用为原生的 `LayerMask`
 
 ### 修复
-* 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内修改 `Motivator` 的状态码导致堆栈溢出的bug
+* 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内更改 `Motivator` 的状态码导致堆栈溢出的bug
   
 
 ## [1.0.6] - 2024-1-8
@@ -65,7 +65,7 @@
 * 将层级选择器改用为原生的 `LayerMask`
 
 ### 修复
-* 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内修改 `Motivator` 的状态码导致堆栈溢出的bug
+* 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内更改 `Motivator` 的状态码导致堆栈溢出的bug
 
 
 ## [1.0.7] - 2024-1-9
@@ -73,3 +73,7 @@
 * 新的输入注册系统
   * 由原先从 `ControllerModule.OnAdd(Motivator)` 主动注册改为重写 `ControllerModule.GetRequiredKeys()` 被动提供
   * `InputModule` 现在拥有 `RequiredKeys` 属性，无需从 `Host` 读取
+  * `InputModule` 可以重写 `OnKeyAdd` 和 `OnKeyRemove` 以监听需求按键的变化
+
+### 更改
+* 将 `Motivator.RegisterKeys(KeyCode[])` 和 `Motivator.RequiredKeys` 标记为 `[Obsolete]`
