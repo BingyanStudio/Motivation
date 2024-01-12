@@ -100,20 +100,21 @@ namespace Motivation
 
         /// <summary>
         /// 按键注册初始化。<br/>
-        /// 应当由 <see cref="Motivator"/> 在当前输入模块刚添加时调用，以注册先前添加的按键们。
+        /// 应当由 <see cref="Motivator"/> 在当前输入模块刚添加时调用，以注册先前添加的按键们。<br/>
+        /// 如果你需要一个初始化的回调，请使用 <see cref="Module.OnAdd(Motivator)"/>
         /// </summary>
         /// <param name="keys">按键们</param>
-        public void InitKeys(IEnumerable<KeyCode> keys)
+        public virtual void InitKeys(IEnumerable<KeyCode> keys)
         {
             RequiredKeys = new(keys);
         }
 
         /// <summary>
         /// 当 <see cref="Motivator"/> 因安装新模块而增加了需求按键时触发<br/>
-        /// 在此更新【需要监听的按键】列表
+        /// 在此更新【需要监听的按键】列表。
         /// </summary>
         /// <param name="addedKeys">增加的按键</param>
-        public void OnKeyAdded(params KeyCode[] addedKeys)
+        public virtual void OnKeyAdd(params KeyCode[] addedKeys)
         {
             foreach (var item in addedKeys)
                 RequiredKeys.Add(item);
@@ -121,10 +122,10 @@ namespace Motivation
 
         /// <summary>
         /// 当 <see cref="Motivator"/> 因移除模块而减少了需求按键时触发<br/>
-        /// 在此更新【需要监听的按键】列表
+        /// 在此更新【需要监听的按键】列表。
         /// </summary>
         /// <param name="removedKeys">移除的按键</param>
-        public void OnKeyRemoved(params KeyCode[] removedKeys)
+        public virtual void OnKeyRemove(params KeyCode[] removedKeys)
         {
             foreach (var item in removedKeys)
                 RequiredKeys.Remove(item);

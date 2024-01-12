@@ -526,7 +526,7 @@ namespace Motivation
                 if (!requiredKeys.ContainsKey(code))
                 {
                     requiredKeys.Add(code, 1);
-                    inputModule?.OnKeyAdded(code);
+                    inputModule?.OnKeyAdd(code);
                 }
                 else requiredKeys[code]++;
             }
@@ -544,7 +544,7 @@ namespace Motivation
                     if (requiredKeys[code] <= 0)
                     {
                         requiredKeys.Remove(code);
-                        inputModule?.OnKeyRemoved(code);
+                        inputModule?.OnKeyRemove(code);
                     }
                 }
                 else Debug.LogWarning($"尝试移除未被添加的按键: {code}");
