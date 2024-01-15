@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Motivation
 {
-    public class KeymapInputModule : InputModule
+    public class KeyMapInputModule : InputModule
     {
-        [SerializeField, Title("按键映射")] protected Keymap keymap;
+        [SerializeField, Title("按键映射")] protected KeyMap keymap;
 
         protected override void OnKey(KeyCode k)
             => base.OnKey(keymap.GetMappedKey(k));

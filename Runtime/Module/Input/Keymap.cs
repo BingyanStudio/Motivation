@@ -7,7 +7,7 @@ namespace Motivation
     /// 这个类构建了一个【用户输入按键】与【控制模块需求按键】的双向映射
     /// TODO: 支持向鼠标映射
     /// </summary>
-    public abstract class Keymap : ScriptableObject
+    public abstract class KeyMap : ScriptableObject
     {
         /// <summary>
         /// 将 【用户输入按键】 映射为 【控制模块需求按键】
