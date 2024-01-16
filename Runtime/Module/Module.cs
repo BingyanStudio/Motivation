@@ -135,19 +135,19 @@ namespace Motivation
         /// 向 <see cref="Motivator"/> 发送【键盘持续按下】事件
         /// </summary>
         /// <param name="k">按键</param>
-        protected void OnKey(KeyCode k) => Host.OnKey(k);
+        protected virtual void OnKey(KeyCode k) => Host.OnKey(k);
 
         /// <summary>
         /// 向 <see cref="Motivator"/> 发送【键盘刚刚按下】事件
         /// </summary>
         /// <param name="k">按键</param>
-        protected void OnKeyDown(KeyCode k) => Host.OnKeyDown(k);
+        protected virtual void OnKeyDown(KeyCode k) => Host.OnKeyDown(k);
 
         /// <summary>
         /// 向 <see cref="Motivator"/> 发送【键盘刚刚抬起】事件
         /// </summary>
         /// <param name="k">按键</param>
-        protected void OnKeyUp(KeyCode k) => Host.OnKeyUp(k);
+        protected virtual void OnKeyUp(KeyCode k) => Host.OnKeyUp(k);
 
         /// <summary>
         /// 向 <see cref="Motivator"> 发送一个方向矢量

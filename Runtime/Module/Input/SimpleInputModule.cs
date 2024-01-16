@@ -7,8 +7,9 @@ namespace Motivation
     /// 一个简单的输入组件，使用Unity的旧Input System实现
     /// </summary>
     [CreateAssetMenu(fileName = "SimpleInputModule", menuName = "Motivation/Input/Simple", order = 0)]
-    public class SimpleInputModule : InputModule
+    public class SimpleInputModule : KeyMapInputModule
     {
+        [Header("配置")]
         [SerializeField, Title("接受键盘输入")] private bool enableKey = true;
         [SerializeField, Title("接受鼠标输入")] private bool enableMouse = true;
 
