@@ -77,3 +77,16 @@
 
 ### 更改
 * 将 `Motivator.RegisterKeys(KeyCode[])` 和 `Motivator.RequiredKeys` 标记为 `[Obsolete]`
+
+
+## [1.0.8] - 2024-1-16
+### 新增
+* `KeyMap` 按键映射机制
+  * `KeyMap` 按键映射抽象类，指定按键应当如何在 【用户输入】和【`Motivator`需求】 之间进行映射
+    * `DictionaryKeyMap`: 使用一个简单的字典来实现 `KeyMap` 的功能需求，需要继承并调用 `ApplyKeyMap(IDictionary<KeyCode,KeyCode>)` 方法
+    * `StaticKeyMap`: 静态的 `KeyMap` ，仅保存在编辑器内，用于团队内不同操作习惯的成员进行测试
+  * `KeyMapInputModule` ，自动映射不同的按键并提供给 `Motivator` 使用
+* `H2DJumpModule` 增加了一个回调，在玩家跳跃并持续按住跳跃键时调用，可用于控制跳跃高度
+
+### 修改
+* `SimpleInputModule` 改为继承自 `KeyMapInputModule` 而非 `InputModule`
