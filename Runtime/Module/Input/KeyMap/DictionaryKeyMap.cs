@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Motivation
 {
-    public class DictionaryKeyMap : KeyMap
+    public abstract class DictionaryKeyMap : KeyMap
     {
         private Dictionary<KeyCode, KeyCode> rawToMapped, mappedToRaw;
 
