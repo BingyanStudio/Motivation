@@ -23,5 +23,10 @@ namespace Motivation
         /// <param name="mappedKey">控制模块需要的按键</param>
         /// <returns>用户输入的按键</returns>
         public abstract KeyCode GetRawKey(KeyCode mappedKey);
+
+        /// <summary>
+        /// 初始化回调，会在安装至 <see cref="Motivator" /> 时调用
+        /// </summary>
+        public virtual void Init() { }
     }
 }
