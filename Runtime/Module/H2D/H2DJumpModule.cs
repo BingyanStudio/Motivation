@@ -25,6 +25,7 @@ namespace Motivation
         protected virtual uint GroundStateMask { get; } = MotivatorState.Grounded;
 
         protected DelayedTrigger jumpBuffer, groundBuffer;
+        protected bool isJumpPressed = false;
 
         public override void OnAdd(Motivator m)
         {
@@ -34,6 +35,11 @@ namespace Motivation
             jumpBuffer = new DelayedTrigger(jumpBufferTime);
             groundBuffer = new DelayedTrigger(coyotoTime);
             if (Host.MatchAny(GroundStateMask)) groundBuffer.Trigger();
+        }
+
+        public override void OnExit()
+        {
+            isJumpPressed = false;
         }
 
         public override KeyCode[] GetRequiredKeys() => jumpKeys.ToArray();
@@ -57,20 +63,37 @@ namespace Motivation
 
         public override void PhysicsProcess(float time)
         {
-            if (jumpCnt >= maxJumpCnt) return;
-
-            // 在地上 or 在天上且跳过一次
-            if (jumpBuffer && (groundBuffer || jumpCnt > 0))
+            // 检查起跳
+            if (jumpCnt < maxJumpCnt)
             {
-                jumpBuffer.Clear();
-                groundBuffer.Clear();
-                Jump();
+                // 在地上 or 在天上且跳过一次
+                if (jumpBuffer && (groundBuffer || jumpCnt > 0))
+                {
+                    jumpBuffer.Clear();
+                    groundBuffer.Clear();
+                    Jump();
+                }
+            }
+
+            // 检查持续跳跃
+            if (!Host.Grounded && isJumpPressed)
+            {
+                JumpProcess(time);
             }
         }
 
         public override void InputKeyDown(KeyCode key)
         {
-            if (jumpKeys.Contains(key)) InputJump();
+            if (jumpKeys.Contains(key))
+            {
+                jumpBuffer.Trigger();
+                isJumpPressed = true;
+            }
+        }
+
+        public override void InputKeyUp(KeyCode key)
+        {
+            if (jumpKeys.Contains(key)) isJumpPressed = false;
         }
 
         protected virtual void Jump()
@@ -80,9 +103,6 @@ namespace Motivation
             jumpCnt++;
         }
 
-        public void InputJump()
-        {
-            jumpBuffer.Trigger();
-        }
+        protected virtual void JumpProcess(float time) { }
     }
 }
