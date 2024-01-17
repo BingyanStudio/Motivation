@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Bingyan;
 using UnityEngine;
 
 namespace Motivation
@@ -28,5 +31,39 @@ namespace Motivation
         /// 初始化回调，会在安装至 <see cref="Motivator" /> 时调用
         /// </summary>
         public virtual void Init() { }
+    }
+
+    /// <summary>
+    /// 用于保存所有按键映射的模型类，用于与编辑器交互<br/>
+    /// 相当于向编辑器暴露一个【字典】
+    /// </summary>
+    [Serializable]
+    public class KeyPairs
+    {
+        [SerializeField, HideInInspector] private KeyPair[] keyPairs;
+
+        public Dictionary<KeyCode, KeyCode> GetKeyMap()
+        {
+            var dict = new Dictionary<KeyCode, KeyCode>();
+            foreach (var item in keyPairs)
+            {
+                if (item.Raw == KeyCode.None || item.Mapped == KeyCode.None) continue;
+                if (!dict.TryAdd(item.Raw, item.Mapped)) Debug.LogWarning($"按键 {item.Raw} 被映射到了两个不同的按键上！");
+            }
+            return dict;
+        }
+    }
+
+    /// <summary>
+    /// 用于保存按键映射的模型类，用于与编辑器交互
+    /// </summary>
+    [Serializable]
+    public class KeyPair
+    {
+        [SerializeField, Title("用户输入按键")] private KeyCode raw;
+        [SerializeField, Title("映射按键")] private KeyCode mapped;
+
+        public KeyCode Raw => raw;
+        public KeyCode Mapped => mapped;
     }
 }
