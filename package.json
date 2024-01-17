@@ -1,6 +1,6 @@
 {
     "name": "org.bingyan.motivation",
-    "version": "1.0.8",
+    "version": "1.1.0",
     "displayName": "Motivation",
     "description": "一套思路清奇的状态机工具！",
     "unity": "2019.1",

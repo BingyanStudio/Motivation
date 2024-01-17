@@ -88,5 +88,17 @@
   * `KeyMapInputModule` ，自动映射不同的按键并提供给 `Motivator` 使用
 * `H2DJumpModule` 增加了一个回调，在玩家跳跃并持续按住跳跃键时调用，可用于控制跳跃高度
 
-### 修改
+### 更改
 * `SimpleInputModule` 改为继承自 `KeyMapInputModule` 而非 `InputModule`
+
+## [1.1.0] - 2024-1-17
+### 新增
+* 较为完备的 `KeyMap` 按键映射体系
+  * `KeyMap` 及其子类: 按键映射关系的抽象类型
+    * `EditorKeyMap`: 使用 `EditorPrefs` 存储的按键映射类，适合团队合作时不同成员采用不同的键位对游戏进行测试
+    * `KeyPair` 和 `KeyPairs`: 用于定义按键组合的工具类
+  * `KeyMapInputModule`: 支持自动应用按键映射的输入模块
+* 适用于 `KeyPairs` 以及 `EditorKeyMap` 的编辑器UI改进
+
+### 更改
+* 将 `MotivationStateMaskEditor` 重命名为 `MotivationStateDrawer`

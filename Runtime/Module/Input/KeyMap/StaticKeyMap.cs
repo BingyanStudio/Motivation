@@ -1,31 +1,20 @@
 using UnityEngine;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Bingyan;
 
 namespace Motivation
 {
+    /// <summary>
+    /// 静态的 <see cref="KeyMap"/>, 无法在运行时保存<br/>
+    /// 适用于在编辑器内使用自己习惯的键位进行测试<br/>
+    /// 如果需要制作如【自定义键盘绑定】的功能，需要自行继承 <see cref="DictionaryKeyMap"/> 并使用 json 等可持久化的数据形式进行存储
+    /// </summary>
     [CreateAssetMenu(fileName = "KeyMap", menuName = "Motivation/KeyMap/Static")]
     public class StaticKeyMap : DictionaryKeyMap
     {
-        [SerializeField, Header("按键映射")] private List<KeyPair> keymap;
+        [SerializeField, Header("按键映射")] private KeyPairs keyPairs;
 
         public override void Init()
         {
-            ApplyKeyMap(keymap.ToDictionary(i => i.Raw, i => i.Mapped));
-        }
-
-        [Serializable]
-        protected class KeyPair
-        {
-            [SerializeField, Title("用户输入按键")] private KeyCode raw;
-            [SerializeField, Title("映射按键")] private KeyCode mapped;
-
-            public KeyCode Raw => raw;
-            public KeyCode Mapped => mapped;
+            ApplyKeyMap(keyPairs.GetKeyMap());
         }
     }
-
-
 }
