@@ -9,7 +9,7 @@ namespace Motivation.Editor
     /// 绘制状态码的属性绘制器
     /// </summary>
     [CustomPropertyDrawer(typeof(MotivationStateMask))]
-    public class MotivationStateMaskEditor : LinedPropertyDrawer
+    public class MotivationStateMaskDrawer : LinedPropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
