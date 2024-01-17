@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using static UnityEditor.EditorGUI;
 using Bingyan.Editor;
-using System;
 using Bingyan;
 
 namespace Motivation
