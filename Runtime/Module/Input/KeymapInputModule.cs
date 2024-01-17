@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace Motivation
 {
+    /// <summary>
+    /// 支持键盘映射的输入模块<br/>
+    /// 可以与 <see cref="KeyMap"/> 配合使用，以实现自定义键盘映射
+    /// </summary>
     public class KeyMapInputModule : InputModule
     {
         [SerializeField, Title("按键映射")] protected KeyMap keymap;

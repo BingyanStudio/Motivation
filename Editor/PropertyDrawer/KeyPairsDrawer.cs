@@ -7,6 +7,9 @@ using Bingyan;
 
 namespace Motivation
 {
+    /// <summary>
+    /// <see cref="KeyPairs" /> 的编辑器，提供了一个类似表格的 UI 结构
+    /// </summary>
     [CustomPropertyDrawer(typeof(KeyPairs))]
     public class KeyPairsDrawer : LinedPropertyDrawer
     {
@@ -35,9 +38,9 @@ namespace Motivation
                     raw.enumValueIndex = Popup(GetLeft(), raw.enumValueIndex, raw.enumDisplayNames);
                     mapped.enumValueIndex = Popup(GetRight(), mapped.enumValueIndex, mapped.enumDisplayNames);
 
-                    if (GUI.Button(new(pos.x + pos.width - delBtnWidth, pos.y, delBtnWidth, pos.height), "删除"))
-                        if (DialogUtils.Show("确认删除", $"你确定要删除从 {raw.enumDisplayNames[raw.enumValueIndex]} 到 {mapped.enumDisplayNames[mapped.enumValueIndex]} 的映射吗？", isErr: false))
-                            list.DeleteArrayElementAtIndex(i);
+                    if (GUI.Button(new(pos.x + pos.width - delBtnWidth, pos.y, delBtnWidth, pos.height), "删除")
+                            && DialogUtils.Show("确认删除", $"你确定要删除从 {raw.enumDisplayNames[raw.enumValueIndex]} 到 {mapped.enumDisplayNames[mapped.enumValueIndex]} 的映射吗？", isErr: false))
+                        list.DeleteArrayElementAtIndex(i);
 
                     Next();
                 }

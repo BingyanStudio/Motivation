@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Motivation
 {
     /// <summary>
-    /// 所有定义Motivator行为的模块的基类
+    /// 所有定义 <see cref="Motivator"/> 行为的模块的基类
     /// </summary>
     public abstract class Module : ScriptableObject
     {

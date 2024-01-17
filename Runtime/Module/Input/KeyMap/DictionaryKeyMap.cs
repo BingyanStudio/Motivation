@@ -3,12 +3,15 @@ using System.Collections.Generic;
 
 namespace Motivation
 {
+    /// <summary>
+    /// 使用字典存储键盘映射的 KeyMap
+    /// </summary>
     public abstract class DictionaryKeyMap : KeyMap
     {
         private Dictionary<KeyCode, KeyCode> rawToMapped, mappedToRaw;
 
         /// <summary>
-        /// 将保存的按键映射应用于当前 KeyMap 上。
+        /// 将保存的按键映射应用于当前 <see cref="KeyMap"/> 上。
         /// </summary>
         /// <param name="rawToMappedDict">保存的映射，以键值对的方式传递</param>
         public virtual void ApplyKeyMap(IDictionary<KeyCode, KeyCode> rawToMappedDict)
