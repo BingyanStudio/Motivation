@@ -22,7 +22,7 @@ namespace Motivation.Editor
             var keyPairs = serializedObject.FindProperty("keyPairs").FindPropertyRelative("keyPairs");
 
             // 从 EditorPrefs 读取
-            var json = EditorPrefs.GetString(EDITORPREFS_NAME, "");
+            var json = EditorPrefs.GetString(GetEditorPrefsName(), "");
             (int, int)[] list = json.Length > 0 ? JsonMapper.ToObject<(int, int)[]>(json) : new (int, int)[0];
             keyPairs.arraySize = list.Length;
             for (int i = 0; i < list.Length; i++)
@@ -88,7 +88,13 @@ namespace Motivation.Editor
                 var item = keyPairs.GetArrayElementAtIndex(i);
                 list[i] = (item.FindPropertyRelative("raw").enumValueIndex, item.FindPropertyRelative("mapped").enumValueIndex);
             }
-            EditorPrefs.SetString(EDITORPREFS_NAME, JsonMapper.ToJson(list));
+            EditorPrefs.SetString(GetEditorPrefsName(), JsonMapper.ToJson(list));
+        }
+
+        private string GetEditorPrefsName()
+        {
+            var paths = Application.dataPath.Split('/');
+            return $"{EDITORPREFS_NAME}_{paths[paths.Length - 2]}";
         }
     }
 }
