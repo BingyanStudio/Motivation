@@ -5,7 +5,9 @@
         "Bingyan.DevKit",
         "Bingyan.DevKit.Editor"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
