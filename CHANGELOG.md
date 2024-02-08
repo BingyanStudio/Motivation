@@ -13,6 +13,7 @@
 ## [1.0.1] - 2024-1-1
 ### 更改
 * 将 `H2DBoxcastPhysicsModule` 更名为 `H2DCirclecastPhysicsModule` 以与实际行为匹配
+  
 
 ### 修复
 * 修复了 `Motivator` 的 `capableModules` 列表为 `null` 的bug
@@ -44,7 +45,8 @@
 ## [1.0.5] - 2024-1-8
 ### 新增
 * 增加了 `Motivator.Message(uint)` 与 `Module.OnMessage(uint)` 方法，作为跨模块信息传递的渠道之一 
-  
+    
+
 ### 更改
 * 提供 `DelayedTrigger.Time` 和 `DelayedTrigger.Percent` 用于获取其内部计时状态
 * 现在 `Motivator` 在更新激活的模块时，将不会调用未启用模块的 `OnEnter()` 和 `OnExit()` 方法
@@ -54,6 +56,7 @@
 ### 新增
 * 增加了 `Motivator` 在编辑器面板的状态显示
 * 将层级选择器改用为原生的 `LayerMask`
+  
 
 ### 修复
 * 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内更改 `Motivator` 的状态码导致堆栈溢出的bug
@@ -63,6 +66,7 @@
 ### 新增
 * 增加了 `Motivator` 在编辑器面板的状态显示
 * 将层级选择器改用为原生的 `LayerMask`
+  
 
 ### 修复
 * 修复了在 `Module.OnEnter()` 和 `Module.OnExit()` 内更改 `Motivator` 的状态码导致堆栈溢出的bug
@@ -74,6 +78,7 @@
   * 由原先从 `ControllerModule.OnAdd(Motivator)` 主动注册改为重写 `ControllerModule.GetRequiredKeys()` 被动提供
   * `InputModule` 现在拥有 `RequiredKeys` 属性，无需从 `Host` 读取
   * `InputModule` 可以重写 `OnKeyAdd` 和 `OnKeyRemove` 以监听需求按键的变化
+  
 
 ### 更改
 * 将 `Motivator.RegisterKeys(KeyCode[])` 和 `Motivator.RequiredKeys` 标记为 `[Obsolete]`
@@ -87,9 +92,11 @@
     * `StaticKeyMap`: 静态的 `KeyMap` ，仅保存在编辑器内，用于团队内不同操作习惯的成员进行测试
   * `KeyMapInputModule` ，自动映射不同的按键并提供给 `Motivator` 使用
 * `H2DJumpModule` 增加了一个回调，在玩家跳跃并持续按住跳跃键时调用，可用于控制跳跃高度
+  
 
 ### 更改
 * `SimpleInputModule` 改为继承自 `KeyMapInputModule` 而非 `InputModule`
+  
 
 ## [1.1.0] - 2024-1-17
 ### 新增
@@ -99,6 +106,12 @@
     * `KeyPair` 和 `KeyPairs`: 用于定义按键组合的工具类
   * `KeyMapInputModule`: 支持自动应用按键映射的输入模块
 * 适用于 `KeyPairs` 以及 `EditorKeyMap` 的编辑器UI改进
+  
 
 ### 更改
 * 将 `MotivationStateMaskEditor` 重命名为 `MotivationStateDrawer`
+  
+
+## [1.1.1] - 2024-2-8
+### 更改
+* 现在 `Motivator` 提供了 `Init()` 方法，在非自主控制的情况下需要手动调用
