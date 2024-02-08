@@ -125,11 +125,8 @@ namespace Motivation
 
         protected virtual void Start()
         {
-            // 获取组件
-            rb = GetComponent<Rigidbody2D>();
-            col = GetComponent<Collider2D>();
-
-            LoadAllModules();
+            if (automatic)
+                Init();
         }
 
         private void Update()
@@ -149,6 +146,15 @@ namespace Motivation
             inputModule?.OnGizmos(this);
             foreach (var item in modules)
                 item.Value.OnGizmos(this);
+        }
+
+        public void Init()
+        {
+            // 获取组件
+            rb = GetComponent<Rigidbody2D>();
+            col = GetComponent<Collider2D>();
+
+            LoadAllModules();
         }
 
         public override void Process(float delta)
