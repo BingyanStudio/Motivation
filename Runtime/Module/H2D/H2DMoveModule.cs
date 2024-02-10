@@ -33,15 +33,18 @@ namespace Motivation
                 // 在Motiator本体坐标系下，将向左/向右分量设为 speed
                 Host.Velocity += Host.RightDir * dir * speed - Host.VelocityRight;
             }
-
-            leftBuffer = false;
-            rightBuffer = false;
         }
 
-        public override void InputKey(KeyCode key)
+        public override void InputKeyDown(KeyCode key)
         {
-            leftBuffer |= leftKeys.Contains(key);
-            rightBuffer |= rightKeys.Contains(key);
+            if (leftKeys.Contains(key)) leftBuffer = true;
+            if (rightKeys.Contains(key)) rightBuffer = true;
+        }
+
+        public override void InputKeyUp(KeyCode key)
+        {
+            if (leftKeys.Contains(key)) leftBuffer = false;
+            if (rightKeys.Contains(key)) rightBuffer = false;
         }
     }
 }
