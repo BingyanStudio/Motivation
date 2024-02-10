@@ -115,3 +115,8 @@
 ## [1.1.1] - 2024-2-8
 ### 更改
 * 现在 `Motivator` 提供了 `Init()` 方法，在非自主控制的情况下需要手动调用
+    
+
+## [1.1.2] - 2024-2-10
+### 更改
+* 现在 `H2DMoveModule` 采用 `InputKeyDown(KeyCode)` 和 `InputKeyUp(KeyCode)` 进行输入，以绕过~旧输入系统在切换场景时的 bug
