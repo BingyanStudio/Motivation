@@ -204,7 +204,6 @@ namespace Motivation
         /// <returns>是否相符</returns>
         public virtual bool IsCapable(uint state)
         {
-            if (!Active) return false;
             var maskedState = state & masks.Item1;
             return (maskedState & masks.Item2) == masks.Item2 && (~maskedState & masks.Item3) == masks.Item3;
         }
