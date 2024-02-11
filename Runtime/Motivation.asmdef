@@ -1,7 +1,8 @@
 {
     "name": "Motivation",
     "references": [
-        "Bingyan.DevKit"
+        "Bingyan.DevKit",
+        "Unity.InputSystem"
         ],
     "includePlatforms": [],
     "excludePlatforms": [],
