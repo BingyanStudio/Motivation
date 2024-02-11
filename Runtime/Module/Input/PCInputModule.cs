@@ -59,21 +59,19 @@ namespace Motivation
         public override void InitKeys(IEnumerable<KeyCode> keys)
         {
             base.InitKeys(keys);
-            requiredKeys = keys.Select(i => KeyUtils.KeyCodeToKey(i)).ToHashSet();
+            requiredKeys = RequiredKeys.Select(i => KeyUtils.KeyCodeToKey(i)).ToHashSet();
         }
 
         public override void OnKeyAdd(params KeyCode[] addedKeys)
         {
             base.OnKeyAdd(addedKeys);
-            foreach (var item in addedKeys.Select(i => KeyUtils.KeyCodeToKey(i)))
-                requiredKeys.Add(item);
+            requiredKeys = RequiredKeys.Select(i => KeyUtils.KeyCodeToKey(i)).ToHashSet();
         }
 
         public override void OnKeyRemove(params KeyCode[] removedKeys)
         {
             base.OnKeyRemove(removedKeys);
-            foreach (var item in removedKeys.Select(i => KeyUtils.KeyCodeToKey(i)))
-                requiredKeys.Remove(item);
+            requiredKeys = RequiredKeys.Select(i => KeyUtils.KeyCodeToKey(i)).ToHashSet();
         }
     }
 }
