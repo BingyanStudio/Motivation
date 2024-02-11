@@ -5,14 +5,29 @@ using UnityEngine.InputSystem;
 
 namespace Motivation
 {
+    /// <summary>
+    /// 按键工具类
+    /// </summary>
     public static class KeyUtils
     {
+        /// <summary>
+        /// 将旧输入系统的 <see cref="KeyCode"/> 转化为新输入系统的 <see cref="Key"/><br/>
+        /// 目前支持所有字母，回车，空格，退格，Esc
+        /// </summary>
+        /// <param name="keyCode">要转化的 KeyCode</param>
+        /// <returns>转化后的 Key</returns>
         public static Key KeyCodeToKey(KeyCode keyCode)
         {
             if (keycodeToKeyMap.TryGetValue(keyCode, out var val)) return val;
             throw new Exception($"暂不支持 {keyCode} 转为 Key枚举，请提交 Issue!");
         }
 
+        /// <summary>
+        /// 将新输入系统的 <see cref="Key"/> 转化为旧输入系统的 <see cref="KeyCode"/><br/>
+        /// 目前支持所有字母，回车，空格，退格，Esc
+        /// </summary>
+        /// <param name="key">要转化的 Key</param>
+        /// <returns>转化后的 KeyCode</returns>
         public static KeyCode KeyToKeyCode(Key key)
         {
             if (keyToKeyCodeMap.TryGetValue(key, out var val)) return val;
@@ -50,6 +65,7 @@ namespace Motivation
             { KeyCode.Return , Key.Enter },
             { KeyCode.Space , Key.Space },
             { KeyCode.Backspace , Key.Backspace },
+            { KeyCode.Escape , Key.Escape },
         };
 
         private static Dictionary<Key, KeyCode> keyToKeyCodeMap = new()
@@ -83,6 +99,7 @@ namespace Motivation
             { Key.Enter , KeyCode.Return },
             { Key.Space , KeyCode.Space },
             { Key.Backspace , KeyCode.Backspace },
+            { Key.Escape , KeyCode.Escape },
         };
     }
 }
