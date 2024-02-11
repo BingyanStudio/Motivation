@@ -121,5 +121,7 @@
 ### 新增
 * `PCInputModule`: 使用新输入系统实现的 PC 端输入模块
 * `KeyUtils`: 按键工具类，负责将 `UnityEngine.KeyCode` 与 `UnityEngine.InputSystem.Key` 相互转化
-
+  
+  
 ### 更改
+* 修改 `SimpleInputModule` 的鼠标逻辑
