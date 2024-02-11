@@ -125,3 +125,12 @@
   
 ### 更改
 * 修改 `SimpleInputModule` 的鼠标逻辑
+
+
+## [1.1.3] - 2024-2-11
+### 修复
+* 修复了 `ControllerModule` 被禁用时，`Motivator.capableModules` 没有被正确更新的 bug
+  
+
+### 更改
+* 现在 `Motivator` 的子类也会在编辑器菜单显示运行时状态信息了

@@ -6,7 +6,7 @@ namespace Motivation.Editor
     /// <summary>
     /// <see cref="Motivator"/> 的编辑器，提供了在运行时检视其状态的 UI
     /// </summary>
-    [CustomEditor(typeof(Motivator))]
+    [CustomEditor(typeof(Motivator), true)]
     public class MotivatorEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
