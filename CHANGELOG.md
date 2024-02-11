@@ -115,3 +115,11 @@
 ## [1.1.1] - 2024-2-8
 ### 更改
 * 现在 `Motivator` 提供了 `Init()` 方法，在非自主控制的情况下需要手动调用
+  
+
+## [1.1.2] - 2024-2-11
+### 新增
+* `PCInputModule`: 使用新输入系统实现的 PC 端输入模块
+* `KeyUtils`: 按键工具类，负责将 `UnityEngine.KeyCode` 与 `UnityEngine.InputSystem.Key` 相互转化
+
+### 更改

@@ -36,8 +36,8 @@ namespace Motivation
         private void ProcessMouse(int btn)
         {
             if (Input.GetMouseButtonDown(btn)) OnMouseDown(btn, Input.mousePosition);
-            else if (Input.GetMouseButton(btn)) OnMouse(btn, Input.mousePosition);
-            else if (Input.GetMouseButtonUp(btn)) OnMouseUp(btn, Input.mousePosition);
+            if (Input.GetMouseButton(btn)) OnMouse(btn, Input.mousePosition);
+            if (Input.GetMouseButtonUp(btn)) OnMouseUp(btn, Input.mousePosition);
         }
     }
 }
