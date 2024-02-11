@@ -14,7 +14,7 @@
         "email": "hamster5295@163.com"
     },
     "dependencies": {
-        "org.bingyan.devkit": "^1.2.4",
-        "com.unity.inputsystem": "^1.6.3"
+        "org.bingyan.devkit": "1.2.4",
+        "com.unity.inputsystem": "1.6.3"
     }
 }
