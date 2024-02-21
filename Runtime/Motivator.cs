@@ -41,7 +41,6 @@ namespace Motivation
         /// <summary>
         /// 这个角色的本体时间尺度
         /// </summary>
-        /// <value></value>
         public float TimeScale { get => timeScale; set => timeScale = value; }
 
         /// <summary>
@@ -148,7 +147,7 @@ namespace Motivation
                 item.Value.OnGizmos(this);
         }
 
-        public void Init()
+        public virtual void Init()
         {
             // 获取组件
             rb = GetComponent<Rigidbody2D>();

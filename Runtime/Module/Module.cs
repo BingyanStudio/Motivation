@@ -12,7 +12,18 @@ namespace Motivation
         /// 是否启用<br/>
         /// 当设置为 <see cref = "false"/> 时，这个模块将不再执行 <see cref="Process"/>, <see cref="PhysicsProcess"/>, <see cref="OnStateChange(uint)"/>和 所有的监听输入的函数
         /// </summary>
-        public bool Active { get; set; } = true;
+        public bool Active
+        {
+            get => active;
+            set
+            {
+                if (value == active) return;
+                active = value;
+                if (active) OnActive();
+                else OnDeactive();
+            }
+        }
+        private bool active = true;
 
         /// <summary>
         /// 这个模块的所有者
@@ -30,15 +41,26 @@ namespace Motivation
         public virtual void OnAdd(Motivator m) => Host = m;
 
         /// <summary>
+        /// 模块被移除的时候的回调
+        /// </summary>
+        public virtual void OnRemove() => Host = null;
+
+        /// <summary>
+        /// 模块被激活时的回调<br/>
+        /// 注意，模块初始时默认为激活状态，故不会被调用
+        /// </summary>
+        public virtual void OnActive() { }
+
+        /// <summary>
+        /// 模块被禁用时的回调
+        /// </summary>
+        public virtual void OnDeactive() { }
+
+        /// <summary>
         /// 绘制辅助线的回调
         /// </summary>
         /// <param name="m">拥有这个模块的 <see cref="Motivator"/></param>
         public virtual void OnGizmos(Motivator m) { }
-
-        /// <summary>
-        /// 当模块被移除的时候的回调
-        /// </summary>
-        public virtual void OnRemove() => Host = null;
 
         /// <summary>
         /// 更新回调，相当于 Update
