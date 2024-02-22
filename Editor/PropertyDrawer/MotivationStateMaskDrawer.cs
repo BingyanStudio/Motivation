@@ -40,7 +40,7 @@ namespace Motivation.Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return (lineHeight + SPACING)
+            return (lineHeight + spacing)
                     * (1 + MotivationSetting.instance.EnabledCount);
         }
     }

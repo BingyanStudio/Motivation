@@ -138,4 +138,9 @@
 
 ## [1.1.4] - 2024-2-21
 ### 新增
-* `Module.OnActive` 和 `Module.OnDeactive`, 提供在模块激活/禁用时的回调
+* `Module.OnActive` 和 `Module.OnDeactive`, 提供在模块激活/禁用时的回调  
+   
+  
+## [1.1.5] - 2024-2-22
+### 修改
+* 修改部分 API 以支持 DevKit V1.3.2 

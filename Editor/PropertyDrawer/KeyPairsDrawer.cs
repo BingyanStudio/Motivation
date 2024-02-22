@@ -20,14 +20,14 @@ namespace Motivation
 
             var list = property.FindPropertyRelative("keyPairs");
 
-            GUI.Box(new(pos.x - 2, pos.y + 2, pos.width + 4, 2 + (lineHeight + SPACING) * (GetListLines(list) + 2)), "");
+            GUI.Box(new(pos.x - 2, pos.y + 2, pos.width + 4, 2 + (lineHeight + spacing) * (GetListLines(list) + 2)), "");
 
             LabelField(GetLeft(), "用户输入");
             LabelField(GetRight(), "映射");
             Next();
             if (list.arraySize == 0)
             {
-                HelpBox(new(pos.x, pos.y, pos.width, 2 * lineHeight + SPACING), "暂无按键映射", MessageType.Info);
+                HelpBox(new(pos.x, pos.y, pos.width, 2 * lineHeight + spacing), "暂无按键映射", MessageType.Info);
                 Next(2);
             }
             else for (int i = 0; i < list.arraySize; i++)
@@ -51,7 +51,7 @@ namespace Motivation
         {
             var list = property.FindPropertyRelative("keyPairs");
 
-            var height = lineHeight + SPACING;
+            var height = lineHeight + spacing;
             return height * (GetListLines(list) + 2);
         }
 
