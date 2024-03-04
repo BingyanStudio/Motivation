@@ -18,16 +18,9 @@ namespace Motivation
         [SerializeField, Title("接受鼠标输入")] private bool enableMouse = true;
 
         private HashSet<Key> requiredKeys;
-        private Keyboard keyboard;
-        private Mouse mouse;
-
-        public override void OnAdd(Motivator m)
-        {
-            base.OnAdd(m);
-            keyboard = Keyboard.current;
-            mouse = Mouse.current;
-        }
-
+        private Keyboard keyboard => Keyboard.current;
+        private Mouse mouse => Mouse.current;
+        
         public override void Process(float time)
         {
             if (enableKey)
