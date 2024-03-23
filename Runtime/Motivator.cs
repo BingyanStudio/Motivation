@@ -278,7 +278,7 @@ namespace Motivation
         /// <summary>
         /// 激活所有的模块
         /// </summary>
-        public void ActiveAllModules()
+        public void ActivateAllModules()
         {
             inputModule.Active = true;
             physicsModule.Active = true;
@@ -368,11 +368,7 @@ namespace Motivation
         /// <param name="key">哪个按键?</param>
         public void OnKey(KeyCode key)
         {
-            foreach (var item in modules)
-            {
-                if (item.Value.Active)
-                    item.Value.InputKey(key);
-            }
+            capableModules.ForEach(i => { if (i.Active) i.InputKey(key); });
         }
 
         /// <summary>
