@@ -51,8 +51,10 @@ namespace Motivation
             var dict = new Dictionary<KeyCode, KeyCode>();
             foreach (var item in keyPairs)
             {
-                if (item.Raw == KeyCode.None || item.Mapped == KeyCode.None) continue;
-                if (!dict.TryAdd(item.Raw, item.Mapped)) Debug.LogWarning($"按键 {item.Raw} 被映射到了两个不同的按键上！");
+                KeyCode raw = item.Raw, mapped = item.Mapped;
+                if (mapped == KeyCode.None) continue;
+                if (raw == KeyCode.None) raw = mapped;
+                if (!dict.TryAdd(raw, mapped)) Debug.LogWarning($"按键 {item.Raw} 被映射到了两个不同的按键上！");
             }
             return dict;
         }

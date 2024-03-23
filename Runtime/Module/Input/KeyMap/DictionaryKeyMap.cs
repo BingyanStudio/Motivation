@@ -20,8 +20,10 @@ namespace Motivation
             mappedToRaw = new();
             foreach (var item in rawToMappedDict)
             {
-                if (item.Key == KeyCode.None || item.Value == KeyCode.None) rawToMapped.Remove(item.Value);
-                else if (!mappedToRaw.TryAdd(item.Value, item.Key))
+                KeyCode raw = item.Key, mapped = item.Value;
+                if (mapped == KeyCode.None) continue;
+                if (raw == KeyCode.None) raw = mapped;
+                if (!mappedToRaw.TryAdd(mapped, raw))
                 {
                     rawToMapped.Remove(item.Key);
                     Debug.LogWarning("有多个按键映射到了同一个按键上！");
@@ -30,7 +32,11 @@ namespace Motivation
         }
 
         public override KeyCode GetMappedKey(KeyCode rawKey)
-            => rawToMapped.TryGetValue(rawKey, out var result) ? result : rawKey;
+        {
+            if (rawToMapped.TryGetValue(rawKey, out var result)) return result;
+            else if (mappedToRaw.TryGetValue(rawKey, out result) && rawKey == result) return rawKey;
+            return KeyCode.None;
+        }
 
         public override KeyCode GetRawKey(KeyCode mappedKey)
             => mappedToRaw.TryGetValue(mappedKey, out var result) ? result : mappedKey;
