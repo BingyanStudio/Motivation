@@ -41,8 +41,9 @@ namespace Motivation
         {
             if (Host.Grounded)
             {
-                // 清除 y 轴速度
-                Host.Velocity -= Host.VelocityUp;
+                // 如果 y 速度向下，则清除 y 速度
+                if (Vector2.Angle(Host.VelocityUp, Host.UpDir) > 1e-2)
+                    Host.Velocity -= Host.VelocityUp;
             }
             else
             {
