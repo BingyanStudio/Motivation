@@ -18,6 +18,8 @@ namespace Motivation
 
         [Header("模块")]
         [SerializeField] private ControllerModule[] modules;
+        [Header("其他")]
+        [SerializeField] private KeyCode[] otherKeys;
 
         private Dictionary<KeyCode, KeyCode> keymap;
 
@@ -36,6 +38,8 @@ namespace Motivation
                 foreach (var item in modules)
                     foreach (var key in item.GetRequiredKeys())
                         keymap.TryAdd(key, key);
+                foreach (var item in otherKeys)
+                    keymap.TryAdd(item, item);
                 Save();
             }
             ApplyKeyMap(keymap);
@@ -59,11 +63,9 @@ namespace Motivation
             }
 
             keymap.Add(to, fromMapped);
-
-            Modified?.Invoke();
-
             ApplyKeyMap(keymap);
             Save();
+            Modified?.Invoke();
         }
 
         public void Save()

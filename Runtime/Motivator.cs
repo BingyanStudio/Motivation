@@ -473,6 +473,17 @@ namespace Motivation
                 Debug.Log($"{item.Key}, 是否启用: {item.Value.Active}");
         }
 
+        /// <summary>
+        /// 重新加载键位<br/>
+        /// 如果在游戏内动态修改了键位，可能需要调用这个以应用更改
+        /// </summary>
+        public void ReloadKeys()
+        {
+            requiredKeys = new();
+            foreach (var item in modules)
+                AddKeys(item.Value);
+        }
+
         // 用于初始化模块的工具方法
         private T InitModule<T>(T m) where T : Module
         {
