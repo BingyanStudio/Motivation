@@ -15,7 +15,7 @@ namespace Motivation
 
         [Header("配置")]
         [SerializeField, Title("跳跃向上速度")] protected int speed = 5;
-        [SerializeField, Title("最大跳跃次数")] protected int maxJumpCnt = 2;
+        [SerializeField, Title("空中跳跃次数")] protected int maxJumpCnt = 1;
         [SerializeField, Title("按键缓冲时间")] protected float jumpBufferTime = 0.1f;
         [SerializeField, Title("土狼时间")] protected float coyotoTime = 0.1f;
 
@@ -34,6 +34,12 @@ namespace Motivation
 
             jumpBuffer = new DelayedTrigger(jumpBufferTime);
             groundBuffer = new DelayedTrigger(coyotoTime);
+            if (Host.MatchAny(GroundStateMask)) groundBuffer.Trigger();
+        }
+
+        public override void OnActivate()
+        {
+            jumpCnt = 0;
             if (Host.MatchAny(GroundStateMask)) groundBuffer.Trigger();
         }
 
@@ -63,15 +69,29 @@ namespace Motivation
 
         public override void PhysicsProcess(float time)
         {
-            // 检查起跳
-            if (jumpCnt < maxJumpCnt)
+            // // 检查起跳
+            // if (jumpCnt < maxJumpCnt)
+            // {
+            //     // 在地上 or 在天上且跳过一次
+            //     if (jumpBuffer && (groundBuffer || jumpCnt > 0))
+            //     {
+            //         jumpBuffer.Clear();
+            //         groundBuffer.Clear();
+            //         Jump();
+            //     }
+            // }
+            if (jumpBuffer)
             {
-                // 在地上 or 在天上且跳过一次
-                if (jumpBuffer && (groundBuffer || jumpCnt > 0))
+                if (groundBuffer)
                 {
-                    jumpBuffer.Clear();
-                    groundBuffer.Clear();
                     Jump();
+                    jumpBuffer.Clear();
+                }
+                else if (jumpCnt < maxJumpCnt)
+                {
+                    Jump();
+                    jumpBuffer.Clear();
+                    jumpCnt++;
                 }
             }
 
@@ -100,7 +120,6 @@ namespace Motivation
         {
             Host.Velocity -= Host.VelocityUp;
             Host.Velocity += Host.UpDir * speed;
-            jumpCnt++;
         }
 
         protected virtual void JumpProcess(float time) { }
