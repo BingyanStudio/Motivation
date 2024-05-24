@@ -19,6 +19,7 @@ namespace Motivation
         [SerializeField, Title("水中横向阻尼")] protected float waterHDamp = 0.1f;
         [SerializeField, Title("水中纵向阻尼")] protected float waterVDamp = 0.1f;
 
+        public float Gravity { get => gravity; set => gravity = value; }
         public Vector2 GravityDirection { get => gravityDirection; set => gravityDirection = value.normalized; }
 
         public override void PhysicsProcess(float time)

@@ -19,8 +19,8 @@ namespace Motivation
             {
                 if (value == active) return;
                 active = value;
-                if (active) OnActive();
-                else OnDeactive();
+                if (active) OnActivate();
+                else OnDeactivate();
             }
         }
         private bool active = true;
@@ -49,12 +49,12 @@ namespace Motivation
         /// 模块被激活时的回调<br/>
         /// 注意，模块初始时默认为激活状态，故不会被调用
         /// </summary>
-        public virtual void OnActive() { }
+        public virtual void OnActivate() { }
 
         /// <summary>
         /// 模块被禁用时的回调
         /// </summary>
-        public virtual void OnDeactive() { }
+        public virtual void OnDeactivate() { }
 
         /// <summary>
         /// 绘制辅助线的回调
