@@ -59,7 +59,7 @@ namespace Motivation
             {
                 keymap.Remove(to);
                 keymap.Add(from, toMapped);
-                onOtherAffected.Invoke(to, from);
+                onOtherAffected?.Invoke(to, from);
             }
 
             keymap.Add(to, fromMapped);
