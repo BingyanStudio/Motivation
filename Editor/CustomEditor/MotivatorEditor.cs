@@ -12,7 +12,7 @@ namespace Motivation.Editor
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            if (Application.isEditor && Application.isPlaying)
+            if (EditorApplication.isPlaying)
             {
                 var host = target as Motivator;
 
@@ -33,5 +33,8 @@ namespace Motivation.Editor
                 }
             }
         }
+
+        public override bool RequiresConstantRepaint() 
+            => EditorApplication.isPlaying || base.RequiresConstantRepaint();
     }
 }
