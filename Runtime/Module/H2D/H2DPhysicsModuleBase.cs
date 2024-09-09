@@ -1,3 +1,4 @@
+using System;
 using Bingyan;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace Motivation
     /// </summary>
     public abstract class H2DPhysicsModuleBase : PhysicsModule
     {
+        public event Action Grounded, Ungrounded;
+
         [Header("重力")]
         [SerializeField, Title("重力加速度")] protected float gravity = 10;
         [SerializeField, Title("重力方向")] protected Vector2 gravityDirection = Vector2.down;
@@ -33,9 +36,17 @@ namespace Motivation
         {
             if (IsGrounded())
             {
-                if (!Host.Grounded) Host.AddState(MotivatorState.Grounded);
+                if (!Host.Grounded)
+                {
+                    Host.AddState(MotivatorState.Grounded);
+                    Grounded?.Invoke();
+                }
             }
-            else if (Host.Grounded) Host.RemoveState(MotivatorState.Grounded);
+            else if (Host.Grounded)
+            {
+                Host.RemoveState(MotivatorState.Grounded);
+                Ungrounded?.Invoke();
+            }
         }
 
         protected void ApplyGravity(float time)

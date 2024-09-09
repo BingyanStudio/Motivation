@@ -24,20 +24,19 @@ namespace Motivation
         }
 
         protected override bool IsGrounded()
-        {
-            return IsGrounded(groundLayers);
-        }
+            => IsGrounded(RaycastGround(groundLayers));
 
-        protected virtual bool IsGrounded(LayerMask mask)
+        protected virtual bool IsGrounded(RaycastHit2D hit)
+            => hit.collider
+                    && Vector2.Angle(Host.transform.TransformDirection(Vector3.up), hit.normal) <= maxSlopeDegree;
+
+        protected virtual RaycastHit2D RaycastGround(LayerMask mask)
         {
             var bounds = Host.Col.bounds;
             var dir = -Host.UpDir;
 
             // 碰撞箱底部中心的坐标
-            var result = Physics2D.BoxCast((Vector2)bounds.center + dir * bounds.extents.y, new Vector2(groundDetWidth, 1e-3f), 0, dir, groundDetDistance, mask);
-            return result.collider
-                && Vector2.Angle(Host.transform.TransformDirection(Vector3.up), result.normal) <= maxSlopeDegree;
-
+            return Physics2D.BoxCast((Vector2)bounds.center + dir * bounds.extents.y, new Vector2(groundDetWidth, 1e-3f), 0, dir, groundDetDistance, mask);
         }
     }
 }
