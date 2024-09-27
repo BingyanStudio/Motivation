@@ -10,74 +10,39 @@ namespace Motivation
     /// 使用 <see cref="PlayerPrefs"/> 存储键盘映射的 KeyMap
     /// </summary>
     [CreateAssetMenu(fileName = "KeyMap", menuName = "Motivation/KeyMap/PlayerPrefs")]
-    public class PlayerPrefsKeyMap : DictionaryKeyMap
+    public class PlayerPrefsKeyMap : SavedJsonDictionaryKeyMap
     {
         public const string KEY = "MotivationKeyMap";
-
-        public event Action Modified;
 
         [Header("模块")]
         [SerializeField] private ControllerModule[] modules;
         [Header("其他")]
         [SerializeField] private KeyCode[] otherKeys;
 
-        private Dictionary<KeyCode, KeyCode> keymap;
-
         public override void Init()
         {
             base.Init();
-            var savedKeymap = PlayerPrefs.GetString(KEY, "");
-            if (savedKeymap.Length > 0)
-            {
-                var loaded = JsonMapper.ToObject<Dictionary<string, int>>(savedKeymap);
-                keymap = loaded.ToDictionary(i => (KeyCode)int.Parse(i.Key), j => (KeyCode)j.Value);
-            }
-            else
-            {
-                keymap = new();
-                foreach (var item in modules)
-                    foreach (var key in item.GetRequiredKeys())
-                        keymap.TryAdd(key, key);
-                foreach (var item in otherKeys)
-                    keymap.TryAdd(item, item);
-                Save();
-            }
-            ApplyKeyMap(keymap);
+            Debug.Log("gg");
         }
 
-        public void Modify(KeyCode from, KeyCode to, Action<KeyCode, KeyCode> onOtherAffected = null)
-        {
-            if (!keymap.TryGetValue(from, out var fromMapped))
-            {
-                Debug.LogWarning($"键位映射中不包含 {from} !");
-                return;
-            }
+        protected override string GetJson() => PlayerPrefs.GetString(KEY, "");
+        protected override void Save(string json) => PlayerPrefs.SetString(KEY, json);
 
-            keymap.Remove(from);
-
-            if (keymap.TryGetValue(to, out var toMapped))
-            {
-                keymap.Remove(to);
-                keymap.Add(from, toMapped);
-                onOtherAffected?.Invoke(to, from);
-            }
-
-            keymap.Add(to, fromMapped);
-            ApplyKeyMap(keymap);
-            Save();
-            Modified?.Invoke();
-        }
-
-        public void Save()
-        {
-            var json = JsonMapper.ToJson(keymap.ToDictionary(k => (int)k.Key, v => (int)v.Value));
-            PlayerPrefs.SetString(KEY, json);
-        }
-
-        public void Clear()
+        public override void Clear()
         {
             PlayerPrefs.DeleteKey(KEY);
             Init();
+        }
+
+        protected override HashSet<KeyCode> GetReqestedKeys()
+        {
+            var defaultMap = new HashSet<KeyCode>();
+            foreach (var item in modules)
+                foreach (var key in item.GetRequiredKeys())
+                    defaultMap.Add(key);
+            foreach (var item in otherKeys)
+                defaultMap.Add(item);
+            return defaultMap;
         }
     }
 }

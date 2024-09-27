@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using LitJson;
+using System.Linq;
+using System;
 
 namespace Motivation
 {
@@ -8,6 +11,7 @@ namespace Motivation
     /// </summary>
     public abstract class DictionaryKeyMap : KeyMap
     {
+        protected Dictionary<KeyCode, KeyCode> Current => rawToMapped;
         private Dictionary<KeyCode, KeyCode> rawToMapped, mappedToRaw;
 
         /// <summary>
@@ -40,5 +44,84 @@ namespace Motivation
 
         public override KeyCode GetRawKey(KeyCode mappedKey)
             => mappedToRaw.TryGetValue(mappedKey, out var result) ? result : mappedKey;
+    }
+
+    public abstract class SavedDictionaryKeyMap : DictionaryKeyMap
+    {
+        public event Action Modified;
+
+        public override void Init()
+        {
+            base.Init();
+            ApplyKeyMap(Load());
+        }
+
+        public abstract void Clear();
+        protected abstract Dictionary<KeyCode, KeyCode> Load();
+        protected abstract void Save(Dictionary<KeyCode, KeyCode> dict);
+        public void Save() => Save(Current);
+
+        public void Modify(KeyCode from, KeyCode to, Action<KeyCode, KeyCode> onOtherAffected = null)
+        {
+            var keymap = Current;
+            if (!keymap.TryGetValue(from, out var fromMapped))
+            {
+                Debug.LogWarning($"键位映射中不包含 {from} !");
+                return;
+            }
+
+            keymap.Remove(from);
+
+            if (keymap.TryGetValue(to, out var toMapped))
+            {
+                keymap.Remove(to);
+                keymap.Add(from, toMapped);
+                onOtherAffected?.Invoke(to, from);
+            }
+
+            keymap.Add(to, fromMapped);
+            ApplyKeyMap(keymap);
+            Save();
+            Modified?.Invoke();
+        }
+    }
+
+    public abstract class SavedJsonDictionaryKeyMap : SavedDictionaryKeyMap
+    {
+        protected abstract string GetJson();
+        protected abstract void Save(string json);
+        protected abstract HashSet<KeyCode> GetReqestedKeys();
+
+        protected override Dictionary<KeyCode, KeyCode> Load()
+        {
+            Dictionary<KeyCode, KeyCode> result;
+            try
+            {
+                var rawDict = JsonMapper.ToObject<Dictionary<string, int>>(GetJson());
+                var req = GetReqestedKeys();
+
+                if (rawDict == null) return req.ToDictionary(i => i, i => i);
+                else
+                {
+                    var dict = rawDict.ToDictionary(i => (KeyCode)int.Parse(i.Key),
+                                                    j => (KeyCode)j.Value);
+                    foreach (var key in req)
+                        if (!dict.ContainsValue(key))
+                            dict.Add(key, key);
+
+                    return dict;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("读取到不正确的 Json");
+                Debug.LogError($"{e.Message}\n{e.StackTrace}");
+                result = GetReqestedKeys().ToDictionary(i => i, i => i);
+            }
+            return result;
+        }
+
+        protected override void Save(Dictionary<KeyCode, KeyCode> dict)
+            => Save(JsonMapper.ToJson(dict.ToDictionary(k => (int)k.Key, v => (int)v.Value)));
     }
 }
